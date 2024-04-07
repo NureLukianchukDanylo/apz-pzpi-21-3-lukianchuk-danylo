@@ -396,3 +396,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/Task2/apz-pzpi-21-3-lukianchuk-danylo-task2/EventSuite.API/EventSuite.API/appsettings.Development.json
+/Task2/apz-pzpi-21-3-lukianchuk-danylo-task2/DatabaseBackups
