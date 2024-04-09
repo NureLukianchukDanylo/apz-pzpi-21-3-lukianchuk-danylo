@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using EventSuite.BLL.Services.Interfaces;
+using System.Globalization;
+using EventSuite.Core.Resources;
 
 namespace SmartAdSignage.API.Controllers
 {

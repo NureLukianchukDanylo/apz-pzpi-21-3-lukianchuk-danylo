@@ -2,6 +2,7 @@ using EventSuite.API.Extensions;
 using EventSuite.Core.Models;
 using EventSuite.DAL.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,10 +24,14 @@ builder.Services.RegisterServices();
 builder.Services.ConfigureSwagger();
 builder.Services.ConfigureJWT(builder.Configuration);
 builder.Services.ConfigureMapping();
+builder.Services.ConfigureLocalization();
 
 builder.Host.UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
 
 var app = builder.Build();
+
+var localizeOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
+app.UseRequestLocalization(localizeOptions.Value);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -45,6 +50,8 @@ app.UseCors(policyBuilder =>
     policyBuilder.AllowAnyMethod();
     policyBuilder.AllowAnyHeader();
 });
+
+app.ConfigureExceptionHandler();
 
 app.UseAuthentication();
 app.UseAuthorization();

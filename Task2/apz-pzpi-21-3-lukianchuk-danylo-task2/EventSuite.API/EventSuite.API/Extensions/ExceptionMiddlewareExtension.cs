@@ -1,9 +1,8 @@
-﻿/*using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using SmartAdSignage.Core.DTOs.Exception;
-using SmartAdSignage.Core.Extra;
+using EventSuite.Core.DTOs.Responses.Exception;
 using System.Net;
 using System.Reflection;
 using System.Security.Authentication;
@@ -32,7 +31,7 @@ namespace EventSuite.API.Extensions
                             await context.Response.WriteAsync(
                                 new ExceptionResponse()
                                 {
-                                    StatusCode = (int) status,
+                                    StatusCode = (int)status,
                                     Message = contextFeature.Error.InnerException == null ? contextFeature.Error.Message : contextFeature.Error.InnerException.Message
                                 }.ToString());
                         }
@@ -51,7 +50,6 @@ namespace EventSuite.API.Extensions
                                     or AuthenticationException => HttpStatusCode.Unauthorized,
                 ArgumentNullException
                                     or NullReferenceException
-                                    or LightMeterException
                                     or ArgumentException
                                     or InvalidOperationException
                                     or DbUpdateException
@@ -62,4 +60,3 @@ namespace EventSuite.API.Extensions
         }
     }
 }
-*/
