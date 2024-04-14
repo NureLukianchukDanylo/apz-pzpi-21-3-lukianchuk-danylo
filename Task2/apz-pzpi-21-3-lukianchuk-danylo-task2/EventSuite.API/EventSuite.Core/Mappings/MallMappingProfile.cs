@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using EventSuite.Core.DTOs.Responses.Mall;
+using EventSuite.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,10 @@ namespace EventSuite.Core.Mappings
 {
     public class MallMappingProfile: Profile
     {
-        public MallMappingProfile() { }
+        public MallMappingProfile() 
+        {
+            CreateMap<Mall, MallPropsResponse>().ReverseMap();
+            CreateMap<Mall, MallResponse>().ReverseMap();
+        }
     }
 }

@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventSuite.Core.Models
+namespace EventSuite.Core.DTOs.Requests.Location
 {
-    public class Location: BaseEntity
+    public class LocationRequest
     {
         public string? Country { get; set; }
         public string? City { get; set; }
         public string? Street { get; set; }
         public string? StreetType { get; set; }
         public string? BuildingNumber { get; set; }
-        public virtual ICollection<Mall>? Malls { get; set; }
     }
 }

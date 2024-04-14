@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace EventSuite.Core.Resources
 {
-    public static class Resource
+    public static class Resources
     {
         private static readonly Lazy<ResourceManager> ResourceManager = new(() =>
         {
-            var resourceType = typeof(Resource);
+            var resourceType = typeof(Resources);
             return new ResourceManager(resourceType.FullName, resourceType.Assembly);
         });
 

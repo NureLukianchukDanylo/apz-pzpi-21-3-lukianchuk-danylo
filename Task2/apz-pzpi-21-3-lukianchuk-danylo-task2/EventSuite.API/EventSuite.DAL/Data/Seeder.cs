@@ -32,7 +32,7 @@ namespace EventSuite.DAL.Data
             var aspNetCoreIdentityDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             await aspNetCoreIdentityDbContext.Database.MigrateAsync();
             await SeedUsersAndRolesAsync(serviceProvider);
-            //await SeedDataAsync(serviceProvider);
+            await SeedDataAsync(serviceProvider);
         }
 
         private async Task SeedUsersAndRolesAsync(IServiceProvider serviceProvider)
@@ -92,13 +92,13 @@ namespace EventSuite.DAL.Data
             }
         }
 
-        /*private async Task SeedDataAsync(IServiceProvider serviceProvider)
+        private async Task SeedDataAsync(IServiceProvider serviceProvider)
         {
             var userId = _userManager.Users.First().Id;
-            var location = await _unitOfWork.Locations.GetAllAsync();
-            if (!location.Any())
+            var locations = await _unitOfWork.Locations.GetAllAsync();
+            if (!locations.Any())
             {
-                var newLocations = new Faker<Location>()
+                locations = new Faker<Location>()
                     .RuleFor(l => l.Country, f => f.Address.Country())
                     .RuleFor(l => l.City, f => f.Address.City())
                     .RuleFor(l => l.Street, f => f.Address.StreetName())
@@ -106,41 +106,37 @@ namespace EventSuite.DAL.Data
                     .RuleFor(l => l.BuildingNumber, f => f.Random.Int(1, 10).ToString())
                     .Generate(5).ToList();
 
-                await _unitOfWork.Locations.AddManyAsync(newLocations);
+                await _unitOfWork.Locations.AddManyAsync(locations);
                 await _context.SaveChangesAsync();
             }
-            var panels = await _unitOfWork.Panels.GetAllAsync();
-            if (!panels.Any())
+
+            var events = await _unitOfWork.Events.GetAllAsync();
+            if (!events.Any())
             {
-                var locationId = (await _unitOfWork.Locations.GetAllAsync()).First().Id;
-                var newPanels = new Faker<Panel>()
-                    .RuleFor(p => p.Height, f => f.Random.Double(3, 15))
-                    .RuleFor(p => p.Width, f => f.Random.Double(2, 8))
-                    .RuleFor(p => p.Brightness, f => f.Random.Double(10, 10000))
-                    .RuleFor(p => p.Status, "Active")
-                    .RuleFor(p => p.Latitude, f => f.Random.Decimal(0, 100))
-                    .RuleFor(p => p.Longitude, f => f.Random.Decimal(0, 100))
-                    .RuleFor(p => p.LocationId, locationId)
+                events = new Faker<Event>()
+                    .RuleFor(p => p.Name, f => f.Company.CompanyName())
+                    .RuleFor(p => p.Description, f => f.Lorem.Text())
+                    .RuleFor(p => p.Size, f => f.Random.Int(100, 5000))
+                    .RuleFor(p => p.StartDate, f => f.Date.Past())
+                    .RuleFor(p => p.EndDate, f => f.Date.Future())
                     .RuleFor(p => p.UserId, userId)
                     .Generate(5).ToList();
 
-                await _unitOfWork.Panels.AddManyAsync(newPanels);
+                await _unitOfWork.Events.AddManyAsync(events);
                 await _context.SaveChangesAsync();
             }
-            var iotDevices = await _unitOfWork.IoTDevices.GetAllAsync();
-            if (!iotDevices.Any())
+            var malls = await _unitOfWork.Malls.GetAllAsync();
+            if (!malls.Any())
             {
-                panels = await _unitOfWork.Panels.GetAllAsync();
-                var panelId = (await _unitOfWork.Panels.GetAllAsync()).First().Id;
-                var newIoTDevices = panels.Select(panel => new Faker<IoTDevice>()
-                    .RuleFor(i => i.Name, "Light Meter")
-                    .RuleFor(i => i.Status, "Active")
-                    .RuleFor(i => i.PanelId, panel.Id)
-                    .Generate()).ToList();
-                await _unitOfWork.IoTDevices.AddManyAsync(newIoTDevices);
+                malls = new Faker<Mall>()
+                    .RuleFor(i => i.Name, f => f.Company.CompanyName())
+                    .RuleFor(i => i.Square, f => f.Random.Double(10, 10000))
+                    .RuleFor(i => i.LocationId, locations.FirstOrDefault()?.Id)
+                    .Generate(5).ToList();
+                await _unitOfWork.Malls.AddManyAsync(malls);
                 await _context.SaveChangesAsync();
             }
-            var advertisements = await _unitOfWork.Advertisements.GetAllAsync();
+            /*var advertisements = await _unitOfWork.Advertisements.GetAllAsync();
             if (!advertisements.Any())
             {
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "Images", "Food.png");
@@ -195,7 +191,7 @@ namespace EventSuite.DAL.Data
                     .Generate(5).ToList();
                 await _unitOfWork.CampaignAdvertisements.AddManyAsync(newCampaignAdvertisements);
                 await _context.SaveChangesAsync();
-            }
-        }*/
+            }*/
+        }
     }
 }

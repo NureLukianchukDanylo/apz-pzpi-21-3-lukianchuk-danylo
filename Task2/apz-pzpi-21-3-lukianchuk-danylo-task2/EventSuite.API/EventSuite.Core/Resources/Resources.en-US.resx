@@ -97,7 +97,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TEST_ERROR" xml:space="preserve">
-    <value>Це тестова помилка</value>
+  <data name="Invalid arguments" xml:space="preserve">
+    <value>Some arguments are missing or wrong format</value>
+  </data>
+  <data name="Invalid date" xml:space="preserve">
+    <value>Dates are not valid</value>
   </data>
 </root>

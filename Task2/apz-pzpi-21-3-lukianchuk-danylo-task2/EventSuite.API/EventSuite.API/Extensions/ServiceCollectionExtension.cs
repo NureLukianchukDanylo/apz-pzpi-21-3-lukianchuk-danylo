@@ -65,10 +65,10 @@ namespace EventSuite.API.Extensions
         public static void RegisterServices(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
-            /*services.AddScoped<IAdvertisementService, AdvertisementService>();
-            services.AddScoped<IPanelService, PanelService>();
+            services.AddScoped<IEventService, EventService>();
             services.AddScoped<ILocationService, LocationService>();
-            services.AddScoped<IIoTDeviceService, IoTDeviceService>();
+            services.AddScoped<IMallService, MallService>();
+            /*services.AddScoped<IIoTDeviceService, IoTDeviceService>();
             services.AddScoped<IAdCampaignService, AdCampaignService>();
             services.AddScoped<ICampaignAdService, CampaignAdService>();
             services.AddScoped<IQueueService, QueueService>();*/
@@ -78,10 +78,10 @@ namespace EventSuite.API.Extensions
         public static void RegisterRepositories(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            /*services.AddTransient<IGenericRepository<Advertisement>, GenericRepository<Advertisement>>();
-            services.AddTransient<IGenericRepository<AdCampaign>, GenericRepository<AdCampaign>>();
-            services.AddTransient<IGenericRepository<Panel>, GenericRepository<Panel>>();
+            services.AddTransient<IGenericRepository<Event>, GenericRepository<Event>>();
             services.AddTransient<IGenericRepository<Location>, GenericRepository<Location>>();
+            services.AddTransient<IGenericRepository<Mall>, GenericRepository<Mall>>();
+            /*services.AddTransient<IGenericRepository<Panel>, GenericRepository<Panel>>();
             services.AddTransient<IGenericRepository<IoTDevice>, GenericRepository<IoTDevice>>();
             services.AddTransient<IGenericRepository<CampaignAdvertisement>, GenericRepository<CampaignAdvertisement>>();
             services.AddTransient<IGenericRepository<Queue>, GenericRepository<Queue>>();*/
@@ -125,7 +125,7 @@ namespace EventSuite.API.Extensions
                 map.AddProfile<EventMappingProfile>();
                 map.AddProfile<EventResourceMappingProfile>();
                 map.AddProfile<MallMappingProfile>();
-                map.AddProfile<ReservationMappingProfile>();
+                map.AddProfile<RegistrationMappingProfile>();
                 map.AddProfile<ReservationMappingProfile>();
                 map.AddProfile<ResourceMappingProfile>();
                 map.AddProfile<TicketMappingProfile>();

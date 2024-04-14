@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using EventSuite.Core.DTOs.Responses.Reservation;
+using EventSuite.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,9 @@ namespace EventSuite.Core.Mappings
 {
     public class ReservationMappingProfile: Profile
     {
-        public ReservationMappingProfile() { }
+        public ReservationMappingProfile() 
+        {
+            CreateMap<Reservation, ReservationPropsResponse>().ReverseMap();
+        }
     }
 }

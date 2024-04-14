@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventSuite.Core.Models
+namespace EventSuite.Core.DTOs.Requests.Mall
 {
-    public class Mall: BaseEntity
+    public class MallRequest
     {
         public string? Name { get; set; }
         public double? Square { get; set; }
         public int? LocationId { get; set; }
-        public virtual Location? Location { get; set; }
-        public virtual ICollection<Venue>? Venues { get; set; }
     }
 }
