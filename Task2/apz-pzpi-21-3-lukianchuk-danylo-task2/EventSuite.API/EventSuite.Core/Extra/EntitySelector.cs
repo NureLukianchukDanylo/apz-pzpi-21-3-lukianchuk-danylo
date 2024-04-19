@@ -105,6 +105,7 @@ namespace EventSuite.Core.Extra
         {
             Id = q.Id,
             Event = q.Event,
+            User = q.User,
             DateCreated = q.DateCreated,
             Tickets = q.Tickets.Select(ticket => new Ticket
             {

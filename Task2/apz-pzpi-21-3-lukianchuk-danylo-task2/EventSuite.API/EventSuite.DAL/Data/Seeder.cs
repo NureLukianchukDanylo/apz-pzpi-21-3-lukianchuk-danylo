@@ -154,6 +154,7 @@ namespace EventSuite.DAL.Data
             {
                 registrations = new Faker<Registration>()
                     .RuleFor(a => a.EventId, events.FirstOrDefault()?.Id)
+                    .RuleFor(a => a.UserId, userId)
                     .Generate(5).ToList();
                 await _unitOfWork.Registrations.AddManyAsync(registrations);
                 await _context.SaveChangesAsync();
