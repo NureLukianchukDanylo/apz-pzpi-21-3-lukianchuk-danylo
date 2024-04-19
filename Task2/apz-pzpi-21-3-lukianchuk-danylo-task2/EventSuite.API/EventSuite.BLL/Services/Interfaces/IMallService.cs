@@ -15,6 +15,6 @@ namespace EventSuite.BLL.Services.Interfaces
         Task<Mall> GetMallByIdAsync(int id);
         Task<IEnumerable<Mall>> GetMallsAsync(PageInfo pageInfo);
         Task<bool> DeleteMallAsync(int id);
-        Task<IEnumerable<Mall>> GetMallsByLocationIdAsync(int id);
+        Task<IEnumerable<Mall>> GetMallsByLocationIdAsync(int locationId);
     }
 }

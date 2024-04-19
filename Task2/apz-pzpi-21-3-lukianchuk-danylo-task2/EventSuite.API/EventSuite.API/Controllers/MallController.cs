@@ -50,8 +50,8 @@ namespace EventSuite.API.Controllers
                 _logger.Information($"Mall with id:{id} not found");
                 return NotFound($"Mall with id:{id} not found");
             }
-            var Mall = _mapper.Map<MallResponse>(result);
-            return Ok(Mall);
+            var mall = _mapper.Map<MallResponse>(result);
+            return Ok(mall);
         }
 
         [HttpDelete]
@@ -71,15 +71,15 @@ namespace EventSuite.API.Controllers
         [Route("mall")]
         public async Task<IActionResult> CreateMall(MallRequest mallRequest)
         {
-            var @mall = _mapper.Map<Mall>(mallRequest);
-            var result = await _mallService.CreateMallAsync(@mall);
+            var mall = _mapper.Map<Mall>(mallRequest);
+            var result = await _mallService.CreateMallAsync(mall);
             if (result == null)
             {
                 _logger.Error($"Couldn't create mall");
                 return BadRequest($"Couldn't create mall");
             }
-            var advertisementResponse = _mapper.Map<MallResponse>(result);
-            return Ok(advertisementResponse);
+            var mallResponse = _mapper.Map<MallResponse>(result);
+            return Ok(mallResponse);
         }
 
         [HttpGet]
@@ -100,8 +100,8 @@ namespace EventSuite.API.Controllers
         [Route("mall/{id}")]
         public async Task<IActionResult> UpdateMall(int id, MallRequest mallRequest)
         {
-            var @mall = _mapper.Map<Mall>(mallRequest);
-            var result = await _mallService.UpdateMallAsync(id, @mall);
+            var mall = _mapper.Map<Mall>(mallRequest);
+            var result = await _mallService.UpdateMallAsync(id, mall);
             if (result == null)
             {
                 _logger.Error($"Mall with id: {id} not found");

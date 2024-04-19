@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using EventSuite.Core.Models;
 using EventSuite.DAL.Repositories.Interfaces;
+using EventSuite.Core.Enums;
 
 namespace EventSuite.DAL.Data
 {
@@ -136,21 +137,28 @@ namespace EventSuite.DAL.Data
                 await _unitOfWork.Malls.AddManyAsync(malls);
                 await _context.SaveChangesAsync();
             }
-            /*var advertisements = await _unitOfWork.Advertisements.GetAllAsync();
-            if (!advertisements.Any())
+            var resources = await _unitOfWork.Resources.GetAllAsync();
+            if (!resources.Any())
             {
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "Images", "Food.png");
-                var file = File.ReadAllBytes(path);
-                var newAdvertisements = new Faker<Advertisement>()
-                    .RuleFor(a => a.Title, f => f.Random.String2(10))
-                    .RuleFor(a => a.Type, f => f.Random.String2(10))
-                    .RuleFor(a => a.File, file)
-                    .RuleFor(a => a.UserId, userId)
+                resources = new Faker<Resource>()
+                    .RuleFor(i => i.Name, f => f.Commerce.ProductName())
+                    .RuleFor(i => i.Description, f => f.Commerce.ProductDescription())
+                    .RuleFor(i => i.Price, f => f.Random.Decimal(10, 1000))
+                    .RuleFor(i => i.Type, f => ResourceType.Equipment)
                     .Generate(5).ToList();
-                await _unitOfWork.Advertisements.AddManyAsync(newAdvertisements);
+                await _unitOfWork.Resources.AddManyAsync(resources);
                 await _context.SaveChangesAsync();
             }
-            var queues = await _unitOfWork.Queues.GetAllAsync();
+            var registrations = await _unitOfWork.Registrations.GetAllAsync();
+            if (!registrations.Any())
+            {
+                registrations = new Faker<Registration>()
+                    .RuleFor(a => a.EventId, events.FirstOrDefault()?.Id)
+                    .Generate(5).ToList();
+                await _unitOfWork.Registrations.AddManyAsync(registrations);
+                await _context.SaveChangesAsync();
+            }
+            /*var queues = await _unitOfWork.Queues.GetAllAsync();
             if (!queues.Any())
             {
                 var panelId = (await _unitOfWork.Panels.GetAllAsync()).First().Id;

@@ -11,6 +11,5 @@ namespace EventSuite.Core.DTOs.Responses.Mall
         public int Id { get; set; }
         public string? Name { get; set; }
         public double? Square { get; set; }
-        public int? LocationId { get; set; }
     }
 }

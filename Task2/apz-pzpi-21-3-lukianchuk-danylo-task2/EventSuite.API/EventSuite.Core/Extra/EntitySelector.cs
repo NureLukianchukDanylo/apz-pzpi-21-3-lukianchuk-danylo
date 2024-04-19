@@ -85,5 +85,33 @@ namespace EventSuite.Core.Extra
                 Square = venue.Square
             }).ToList()
         };
+
+        public static Expression<Func<Resource, Resource>> ResourceSelector => q => new Resource
+        {
+            Id = q.Id,
+            Name = q.Name,
+            Description = q.Description,
+            Type = q.Type,
+            Price = q.Price,
+            EventResources = q.EventResources.Select(eventResource => new EventResource
+            {
+                Id = eventResource.Id,
+                Amount = eventResource.Amount,
+                EventId = eventResource.EventId
+            }).ToList()
+        };
+
+        public static Expression<Func<Registration, Registration>> RegistrationSelector => q => new Registration
+        {
+            Id = q.Id,
+            Event = q.Event,
+            DateCreated = q.DateCreated,
+            Tickets = q.Tickets.Select(ticket => new Ticket
+            {
+                Id = ticket.Id,
+                Type = ticket.Type,
+                Price = ticket.Price,
+            }).ToList()
+        };
     }
 }

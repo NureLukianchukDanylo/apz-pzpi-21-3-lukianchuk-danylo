@@ -11,6 +11,7 @@ using EventSuite.BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using EventSuite.Core.DTOs.Responses.Auth;
 using EventSuite.Core.DTOs.Requests.Auth;
+using EventSuite.Core.DTOs.Responses.User;
 
 namespace EventSuite.API.Controllers
 {
@@ -56,7 +57,7 @@ namespace EventSuite.API.Controllers
             string password = registerRequest.Password;
             string? role = registerRequest.Role;
             var userResult = await _usersService.RegisterUserAsync(user, password, role);
-            var createdUser = _mapper.Map<RegisteredUserResponse>(user);
+            var createdUser = _mapper.Map<UserResponse>(user);
             createdUser.Role = "User";
             return !userResult.Succeeded ? new BadRequestObjectResult(userResult) : Created("", createdUser);
         }
@@ -74,7 +75,7 @@ namespace EventSuite.API.Controllers
             string password = registerRequest.Password;
             string? role = registerRequest.Role;
             var userResult = await _usersService.RegisterUserAsync(user, password, role);
-            var createdUser = _mapper.Map<RegisteredUserResponse>(user);
+            var createdUser = _mapper.Map<UserResponse>(user);
             createdUser.Role = "Admin";
             return !userResult.Succeeded ? new BadRequestObjectResult(userResult) : Created("", createdUser);
         }

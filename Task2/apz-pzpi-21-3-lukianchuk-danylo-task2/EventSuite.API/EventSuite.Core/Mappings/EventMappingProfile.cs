@@ -16,6 +16,7 @@ namespace EventSuite.Core.Mappings
         {
             CreateMap<Event, EventResponse>().ReverseMap();
             CreateMap<EventRequest, Event>().ReverseMap();
+            CreateMap<Event, EventPropsResponse>().ReverseMap();
         }
     }
 }

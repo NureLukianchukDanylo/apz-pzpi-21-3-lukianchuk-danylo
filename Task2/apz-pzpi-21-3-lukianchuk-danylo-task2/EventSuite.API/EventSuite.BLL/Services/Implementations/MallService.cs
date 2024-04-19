@@ -47,9 +47,9 @@ namespace EventSuite.BLL.Services.Implementations
             return await _unitOfWork.Malls.GetPageWithMultiplePredicatesAsync(null, pageInfo, EntitySelector.MallSelector);
         }
 
-        public async Task<IEnumerable<Mall>> GetMallsByLocationIdAsync(int id)
+        public async Task<IEnumerable<Mall>> GetMallsByLocationIdAsync(int locationId)
         {
-            return await _unitOfWork.Malls.GetByConditionAsync(x => x.LocationId == id, EntitySelector.MallSelector);
+            return await _unitOfWork.Malls.GetByConditionAsync(x => x.LocationId == locationId, EntitySelector.MallSelector);
         }
 
         public async Task<Mall> UpdateMallAsync(int id, Mall mall)

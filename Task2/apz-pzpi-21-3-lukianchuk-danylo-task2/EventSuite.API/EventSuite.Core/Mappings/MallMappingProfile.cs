@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EventSuite.Core.DTOs.Requests.Mall;
 using EventSuite.Core.DTOs.Responses.Mall;
 using EventSuite.Core.Models;
 using System;
@@ -15,6 +16,7 @@ namespace EventSuite.Core.Mappings
         {
             CreateMap<Mall, MallPropsResponse>().ReverseMap();
             CreateMap<Mall, MallResponse>().ReverseMap();
+            CreateMap<MallRequest, Mall>().ReverseMap();
         }
     }
 }

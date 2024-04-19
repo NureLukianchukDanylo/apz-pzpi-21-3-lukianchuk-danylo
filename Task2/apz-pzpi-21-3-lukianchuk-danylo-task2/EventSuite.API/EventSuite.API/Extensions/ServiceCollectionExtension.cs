@@ -68,9 +68,9 @@ namespace EventSuite.API.Extensions
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IMallService, MallService>();
-            /*services.AddScoped<IIoTDeviceService, IoTDeviceService>();
-            services.AddScoped<IAdCampaignService, AdCampaignService>();
-            services.AddScoped<ICampaignAdService, CampaignAdService>();
+            services.AddScoped<IResourceService, ResourceService>();
+            services.AddScoped<IRegistrationService, RegistrationService>();
+            /*services.AddScoped<ICampaignAdService, CampaignAdService>();
             services.AddScoped<IQueueService, QueueService>();*/
             services.AddScoped<IDatabaseService, DatabaseService>();
         }
@@ -81,9 +81,9 @@ namespace EventSuite.API.Extensions
             services.AddTransient<IGenericRepository<Event>, GenericRepository<Event>>();
             services.AddTransient<IGenericRepository<Location>, GenericRepository<Location>>();
             services.AddTransient<IGenericRepository<Mall>, GenericRepository<Mall>>();
-            /*services.AddTransient<IGenericRepository<Panel>, GenericRepository<Panel>>();
-            services.AddTransient<IGenericRepository<IoTDevice>, GenericRepository<IoTDevice>>();
-            services.AddTransient<IGenericRepository<CampaignAdvertisement>, GenericRepository<CampaignAdvertisement>>();
+            services.AddTransient<IGenericRepository<Resource>, GenericRepository<Resource>>();
+            services.AddTransient<IGenericRepository<Registration>, GenericRepository<Registration>>();
+            /*services.AddTransient<IGenericRepository<CampaignAdvertisement>, GenericRepository<CampaignAdvertisement>>();
             services.AddTransient<IGenericRepository<Queue>, GenericRepository<Queue>>();*/
             services.AddScoped<IUserRepository, UserRepository>();
         }

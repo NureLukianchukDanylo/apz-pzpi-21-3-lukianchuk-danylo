@@ -17,10 +17,8 @@ namespace EventSuite.Core.Mappings
         public UserMappingProfile() 
         {
             CreateMap<LoginRequest, User>().ReverseMap();
-
             CreateMap<RegisterRequest, User>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email)).ReverseMap();
-            CreateMap<User, RegisteredUserResponse>().ReverseMap();
             CreateMap<User, UserResponse>().ReverseMap();
             CreateMap<UpdateUserRequest, User>().ReverseMap();
         }
