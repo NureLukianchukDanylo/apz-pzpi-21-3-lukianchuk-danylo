@@ -39,5 +39,69 @@ namespace EventSuite.DAL.Data
         {
             dbContextOptionsBuilder.UseLazyLoadingProxies();
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<User>()
+                .HasMany(a => a.Events)
+                .WithOne(q => q.User)
+                .HasForeignKey(q => q.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<User>()
+                .HasMany(a => a.Registrations)
+                .WithOne(q => q.User)
+                .HasForeignKey(q => q.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Event>()
+                .HasMany(a => a.Registrations)
+                .WithOne(q => q.Event)
+                .HasForeignKey(q => q.EventId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Event>()
+                .HasMany(a => a.Reservations)
+                .WithOne(q => q.Event)
+                .HasForeignKey(q => q.EventId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Event>()
+                .HasMany(a => a.EventResources)
+                .WithOne(q => q.Event)
+                .HasForeignKey(q => q.EventId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Resource>()
+                .HasMany(a => a.EventResources)
+                .WithOne(q => q.Resource)
+                .HasForeignKey(q => q.ResourceId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Venue>()
+                .HasMany(a => a.Reservations)
+                .WithOne(q => q.Venue)
+                .HasForeignKey(q => q.VenueId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Registration>()
+                .HasMany(a => a.Tickets)
+                .WithOne(q => q.Registration)
+                .HasForeignKey(q => q.RegistrationId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Mall>()
+                .HasMany(a => a.Venues)
+                .WithOne(q => q.Mall)
+                .HasForeignKey(q => q.MallId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Location>()
+                .HasMany(a => a.Malls)
+                .WithOne(q => q.Location)
+                .HasForeignKey(q => q.LocationId)
+                .OnDelete(DeleteBehavior.SetNull);
+        }
     }
 }
