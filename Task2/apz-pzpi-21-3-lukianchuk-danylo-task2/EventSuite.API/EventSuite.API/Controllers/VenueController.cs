@@ -84,7 +84,7 @@ namespace EventSuite.API.Controllers
         }
 
         [HttpGet]
-        [Route("venues/{venueId}")]
+        [Route("venues/{mallId}")]
         public async Task<IActionResult> GetVenuesByMallId(int mallId)
         {
             var result = await _venueService.GetVenuesByMallIdAsync(mallId);

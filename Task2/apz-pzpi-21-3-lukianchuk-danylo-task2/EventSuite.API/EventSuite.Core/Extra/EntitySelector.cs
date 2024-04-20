@@ -63,8 +63,8 @@ namespace EventSuite.Core.Extra
         {
             Id = q.Id,
             Description = q.Description,
-            EventId = q.EventId,
-            VenueId = q.VenueId
+            Event = q.Event,
+            Venue = q.Venue
         };
 
         public static Expression<Func<Mall, Mall>> MallSelector => q => new Mall 
@@ -139,6 +139,14 @@ namespace EventSuite.Core.Extra
                 Description = reservation.Description,
                 EventId = reservation.EventId,
             }).ToList()
+        };
+
+        public static Expression<Func<EventResource, EventResource>> EventResourceSelector => q => new EventResource
+        {
+            Id = q.Id,
+            Amount = q.Amount,
+            Event = q.Event,
+            Resource = q.Resource
         };
     }
 }

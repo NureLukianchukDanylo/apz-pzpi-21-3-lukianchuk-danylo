@@ -186,20 +186,28 @@ namespace EventSuite.DAL.Data
                 await _unitOfWork.Venues.AddManyAsync(venues);
                 await _context.SaveChangesAsync();
             }
-            /*var camapaignAdvertisements = await _unitOfWork.CampaignAdvertisements.GetAllAsync();
-            if (!camapaignAdvertisements.Any())
+            var eventResources = await _unitOfWork.EventResources.GetAllAsync();
+            if (!eventResources.Any())
             {
-                var adCampaignId = (await _unitOfWork.AdCampaigns.GetAllAsync()).First().Id;
-                var advertisementId = (await _unitOfWork.Advertisements.GetAllAsync()).First().Id;
-                var newCampaignAdvertisements = new Faker<CampaignAdvertisement>()
-                    .RuleFor(c => c.AdvertisementId, advertisementId)
-                    .RuleFor(c => c.AdCampaignId, adCampaignId)
-                    .RuleFor(c => c.Views, f => f.Random.Int(1000, 10000))
-                    .RuleFor(c => c.DisplayedTimes, f => f.Random.Int(2, 20))
+                eventResources = new Faker<EventResource>()
+                    .RuleFor(c => c.Amount, f => f.Random.Int(1, 10))
+                    .RuleFor(c => c.EventId, events.FirstOrDefault()?.Id)
+                    .RuleFor(c => c.ResourceId, resources.FirstOrDefault()?.Id)
                     .Generate(5).ToList();
-                await _unitOfWork.CampaignAdvertisements.AddManyAsync(newCampaignAdvertisements);
+                await _unitOfWork.EventResources.AddManyAsync(eventResources);
                 await _context.SaveChangesAsync();
-            }*/
+            }
+            var reservations = await _unitOfWork.Reservations.GetAllAsync();
+            if (!reservations.Any())
+            {
+                reservations = new Faker<Reservation>()
+                    .RuleFor(c => c.Description, f => f.Lorem.Text())
+                    .RuleFor(c => c.EventId, events.FirstOrDefault()?.Id)
+                    .RuleFor(c => c.VenueId, venues.FirstOrDefault()?.Id)
+                    .Generate(5).ToList();
+                await _unitOfWork.Reservations.AddManyAsync(reservations);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

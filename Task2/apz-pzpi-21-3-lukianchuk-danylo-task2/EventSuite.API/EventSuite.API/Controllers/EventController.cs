@@ -51,8 +51,8 @@ namespace EventSuite.API.Controllers
                 _logger.Information($"Event with id:{id} not found");
                 return NotFound($"Event with id:{id} not found");
             }
-            var Event = _mapper.Map<EventResponse>(result);
-            return Ok(Event);
+            var @event = _mapper.Map<EventResponse>(result);
+            return Ok(@event);
         }
 
         [HttpDelete]

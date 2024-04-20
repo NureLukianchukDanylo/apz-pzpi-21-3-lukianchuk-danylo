@@ -49,9 +49,9 @@ namespace EventSuite.BLL.Services.Implementations
             return await _unitOfWork.Events.GetPageWithMultiplePredicatesAsync(null, pageInfo, EntitySelector.EventSelector);
         }
 
-        public async Task<IEnumerable<Event>> GetEventsByUserIdAsync(string id)
+        public async Task<IEnumerable<Event>> GetEventsByUserIdAsync(string userId)
         {
-            return await _unitOfWork.Events.GetByConditionAsync(x => x.UserId == id, EntitySelector.EventSelector);
+            return await _unitOfWork.Events.GetByConditionAsync(x => x.UserId == userId, EntitySelector.EventSelector);
         }
 
         public async Task<Event> UpdateEventAsync(int id,Event @event)

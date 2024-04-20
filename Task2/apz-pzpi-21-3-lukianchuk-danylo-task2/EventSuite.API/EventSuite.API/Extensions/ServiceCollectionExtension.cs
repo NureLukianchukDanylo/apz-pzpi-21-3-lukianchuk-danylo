@@ -66,10 +66,12 @@ namespace EventSuite.API.Extensions
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IEventResourceService, EventResourceService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IMallService, MallService>();
             services.AddScoped<IResourceService, ResourceService>();
             services.AddScoped<IRegistrationService, RegistrationService>();
+            services.AddScoped<IReservationService, ReservationService>();
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<IVenueService, VenueService>();
             services.AddScoped<IDatabaseService, DatabaseService>();

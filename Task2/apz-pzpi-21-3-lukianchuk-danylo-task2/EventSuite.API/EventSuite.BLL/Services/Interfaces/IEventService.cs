@@ -15,10 +15,6 @@ namespace EventSuite.BLL.Services.Interfaces
         Task<Event> GetEventByIdAsync(int id);
         Task<IEnumerable<Event>> GetEventsAsync(PageInfo pageInfo);
         Task<bool> DeleteEventAsync(int id);
-        Task<IEnumerable<Event>> GetEventsByUserIdAsync(string id);
-        /*Task<IEnumerable<Event>> GetEventsByLocationAsync(Location location);
-        Task<IEnumerable<Event>> GetEventsByVenueTypeAsync(VenueType venueType);
-        Task<IEnumerable<Event>> GetEventsByTicketTypeAsync(TicketType ticketType);
-        Task<IEnumerable<Event>> GetEventsByResourceTypeAsync(ResourceType resourceType);*/
+        Task<IEnumerable<Event>> GetEventsByUserIdAsync(string userId);
     }
 }

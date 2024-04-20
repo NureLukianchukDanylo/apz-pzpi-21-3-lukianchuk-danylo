@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EventSuite.Core.DTOs.Requests.EventResource;
 using EventSuite.Core.DTOs.Responses.EventResource;
 using EventSuite.Core.Models;
 using System;
@@ -13,7 +14,9 @@ namespace EventSuite.Core.Mappings
     {
         public EventResourceMappingProfile()
         {
-            CreateMap<EventResource, EventResourcePropsResponse>();
+            CreateMap<EventResource, EventResourcePropsResponse>().ReverseMap();
+            CreateMap<EventResource, EventResourceResponse>().ReverseMap();
+            CreateMap<EventResourceRequest, EventResource>().ReverseMap();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EventSuite.Core.DTOs.Requests.Reservation;
 using EventSuite.Core.DTOs.Responses.Reservation;
 using EventSuite.Core.Models;
 using System;
@@ -14,6 +15,8 @@ namespace EventSuite.Core.Mappings
         public ReservationMappingProfile() 
         {
             CreateMap<Reservation, ReservationPropsResponse>().ReverseMap();
+            CreateMap<Reservation, ReservationResponse>().ReverseMap();
+            CreateMap<ReservationRequest, Reservation>().ReverseMap();
         }
     }
 }
