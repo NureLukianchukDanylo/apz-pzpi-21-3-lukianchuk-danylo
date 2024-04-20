@@ -114,5 +114,31 @@ namespace EventSuite.Core.Extra
                 Price = ticket.Price,
             }).ToList()
         };
+
+        public static Expression<Func<Ticket, Ticket>> TicketSelector => q => new Ticket
+        {
+            Id = q.Id,
+            Price = q.Price,
+            Type = q.Type,
+            Registration = q.Registration
+        };
+
+        public static Expression<Func<Venue, Venue>> VenueSelector => q => new Venue
+        {
+            Id = q.Id,
+            Description = q.Description,
+            Square = q.Square,
+            MaxSize = q.MaxSize,
+            Services = q.Services,
+            RoomNumber = q.RoomNumber,
+            Floor = q.Floor,
+            Mall = q.Mall,
+            Reservations = q.Reservations.Select(reservation => new Reservation 
+            {
+                Id = reservation.Id,
+                Description = reservation.Description,
+                EventId = reservation.EventId,
+            }).ToList()
+        };
     }
 }

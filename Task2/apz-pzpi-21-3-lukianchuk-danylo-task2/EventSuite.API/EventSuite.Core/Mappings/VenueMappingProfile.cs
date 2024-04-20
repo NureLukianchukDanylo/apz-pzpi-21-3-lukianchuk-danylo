@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EventSuite.Core.DTOs.Requests.Venue;
 using EventSuite.Core.DTOs.Responses.Venue;
 using EventSuite.Core.Models;
 using System;
@@ -13,7 +14,11 @@ namespace EventSuite.Core.Mappings
     {
         public VenueMappingProfile() 
         {
-            CreateMap<Venue, VenuePropsResponse>().ReverseMap();
+            CreateMap<Venue, VenuePropsResponse>()
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString())).ReverseMap();
+            CreateMap<Venue, VenueResponse>()
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString())).ReverseMap();
+            CreateMap<Venue, VenueRequest>().ReverseMap();
         }
     }
 }

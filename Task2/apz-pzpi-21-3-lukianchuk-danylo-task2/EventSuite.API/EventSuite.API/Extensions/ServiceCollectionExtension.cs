@@ -70,8 +70,8 @@ namespace EventSuite.API.Extensions
             services.AddScoped<IMallService, MallService>();
             services.AddScoped<IResourceService, ResourceService>();
             services.AddScoped<IRegistrationService, RegistrationService>();
-            /*services.AddScoped<ICampaignAdService, CampaignAdService>();
-            services.AddScoped<IQueueService, QueueService>();*/
+            services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<IVenueService, VenueService>();
             services.AddScoped<IDatabaseService, DatabaseService>();
         }
 
@@ -83,8 +83,10 @@ namespace EventSuite.API.Extensions
             services.AddTransient<IGenericRepository<Mall>, GenericRepository<Mall>>();
             services.AddTransient<IGenericRepository<Resource>, GenericRepository<Resource>>();
             services.AddTransient<IGenericRepository<Registration>, GenericRepository<Registration>>();
-            /*services.AddTransient<IGenericRepository<CampaignAdvertisement>, GenericRepository<CampaignAdvertisement>>();
-            services.AddTransient<IGenericRepository<Queue>, GenericRepository<Queue>>();*/
+            services.AddTransient<IGenericRepository<Ticket>, GenericRepository<Ticket>>();
+            services.AddTransient<IGenericRepository<Venue>, GenericRepository<Venue>>();
+            services.AddTransient<IGenericRepository<EventResource>, GenericRepository<EventResource>>();
+            services.AddTransient<IGenericRepository<Reservation>, GenericRepository<Reservation>>();
             services.AddScoped<IUserRepository, UserRepository>();
         }
 

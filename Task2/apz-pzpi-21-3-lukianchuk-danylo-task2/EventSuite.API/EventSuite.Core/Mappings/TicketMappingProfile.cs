@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EventSuite.Core.DTOs.Requests.Ticket;
 using EventSuite.Core.DTOs.Responses.Ticket;
 using EventSuite.Core.Models;
 using System;
@@ -15,7 +16,9 @@ namespace EventSuite.Core.Mappings
         {
             CreateMap<Ticket, TicketPropsResponse>()
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString())).ReverseMap();
-            //CreateMap<TicketRequest, Ticket>().ReverseMap();
+            CreateMap<TicketRequest, Ticket>().ReverseMap();
+            CreateMap<Ticket, TicketResponse>()
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString())).ReverseMap();
         }
     }
 }

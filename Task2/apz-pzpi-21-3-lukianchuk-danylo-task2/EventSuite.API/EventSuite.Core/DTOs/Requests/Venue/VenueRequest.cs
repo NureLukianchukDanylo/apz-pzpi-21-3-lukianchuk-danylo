@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventSuite.Core.DTOs.Responses.Venue
+namespace EventSuite.Core.DTOs.Requests.Venue
 {
-    public class VenuePropsResponse
+    public class VenueRequest
     {
-        public int Id { get; set; }
-        public string? Type { get; set; }
+        public VenueType Type { get; set; }
         public string? Description { get; set; }
         public double? Square { get; set; }
         public int MaxSize { get; set; }

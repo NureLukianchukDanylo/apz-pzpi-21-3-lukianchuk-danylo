@@ -144,7 +144,7 @@ namespace EventSuite.DAL.Data
                     .RuleFor(i => i.Name, f => f.Commerce.ProductName())
                     .RuleFor(i => i.Description, f => f.Commerce.ProductDescription())
                     .RuleFor(i => i.Price, f => f.Random.Decimal(10, 1000))
-                    .RuleFor(i => i.Type, f => ResourceType.Equipment)
+                    .RuleFor(i => i.Type, ResourceType.Equipment)
                     .Generate(5).ToList();
                 await _unitOfWork.Resources.AddManyAsync(resources);
                 await _context.SaveChangesAsync();
@@ -159,35 +159,34 @@ namespace EventSuite.DAL.Data
                 await _unitOfWork.Registrations.AddManyAsync(registrations);
                 await _context.SaveChangesAsync();
             }
-            /*var queues = await _unitOfWork.Queues.GetAllAsync();
-            if (!queues.Any())
+            var tickets = await _unitOfWork.Tickets.GetAllAsync();
+            if (!tickets.Any())
             {
-                var panelId = (await _unitOfWork.Panels.GetAllAsync()).First().Id;
-                var advertisementId = (await _unitOfWork.Advertisements.GetAllAsync()).First().Id;
-                var newQueues = new Faker<Queue>()
-                    .RuleFor(q => q.AdvertisementId, advertisementId)
-                    .RuleFor(q => q.PanelId, panelId)
-                    .RuleFor(q => q.DisplayOrder, f => f.Random.Int(1, 100))
+                tickets = new Faker<Ticket>()
+                    .RuleFor(q => q.Price, f => f.Random.Decimal(100, 3000))
+                    .RuleFor(i => i.Type, TicketType.Regular)
+                    .RuleFor(q => q.RegistrationId, registrations.FirstOrDefault()?.Id)
                     .Generate(5).ToList();
-                await _unitOfWork.Queues.AddManyAsync(newQueues);
+                await _unitOfWork.Tickets.AddManyAsync(tickets);
                 await _context.SaveChangesAsync();
             }
-            var adCampaigns = await _unitOfWork.AdCampaigns.GetAllAsync();
-            if (!adCampaigns.Any())
+            var venues = await _unitOfWork.Venues.GetAllAsync();
+            if (!venues.Any())
             {
-                panels = await _unitOfWork.Panels.GetAllAsync();
-                var newAdCampaigns = new Faker<AdCampaign>()
-                    .RuleFor(a => a.Status, f => f.Random.String2(10))
-                    .RuleFor(a => a.StartDate, f => f.Date.Past())
-                    .RuleFor(a => a.EndDate, f => f.Date.Future())
-                    .RuleFor(a => a.TargetedViews, f => f.Random.Int(10000, 100000))
-                    .RuleFor(a => a.UserId, userId)
-                    .RuleFor(a => a.Panels, panels)
+                venues = new Faker<Venue>()
+                    .RuleFor(a => a.Type, VenueType.OpenSpace)
+                    .RuleFor(p => p.Description, f => f.Lorem.Text())
+                    .RuleFor(p => p.Square, f => f.Random.Double(5, 300))
+                    .RuleFor(a => a.MaxSize, f => f.Random.Int(10, 5000))
+                    .RuleFor(a => a.Services, f => f.Lorem.Text())
+                    .RuleFor(a => a.RoomNumber, f => f.Random.Int(1, 500).ToString())
+                    .RuleFor(a => a.Floor, f => f.Random.Int(1, 10))
+                    .RuleFor(a => a.MallId, malls.FirstOrDefault()?.Id)
                     .Generate(5).ToList();
-                await _unitOfWork.AdCampaigns.AddManyAsync(newAdCampaigns);
+                await _unitOfWork.Venues.AddManyAsync(venues);
                 await _context.SaveChangesAsync();
             }
-            var camapaignAdvertisements = await _unitOfWork.CampaignAdvertisements.GetAllAsync();
+            /*var camapaignAdvertisements = await _unitOfWork.CampaignAdvertisements.GetAllAsync();
             if (!camapaignAdvertisements.Any())
             {
                 var adCampaignId = (await _unitOfWork.AdCampaigns.GetAllAsync()).First().Id;
