@@ -1,4 +1,5 @@
-﻿using EventSuite.Core.Extra;
+﻿using EventSuite.Core.DTOs.Responses.Event;
+using EventSuite.Core.Extra;
 using EventSuite.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,6 @@ namespace EventSuite.BLL.Services.Interfaces
         Task<IEnumerable<Event>> GetEventsAsync(PageInfo pageInfo);
         Task<bool> DeleteEventAsync(int id);
         Task<IEnumerable<Event>> GetEventsByUserIdAsync(string userId);
+        Task<IEnumerable<Event>> GetFinishedEventsByUserIdAsync(string userId, PageInfo pageInfo);
     }
 }

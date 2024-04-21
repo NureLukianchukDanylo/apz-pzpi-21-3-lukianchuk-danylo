@@ -15,10 +15,12 @@ namespace EventSuite.Core.Extra
             Id = q.Id,
             Name = q.Name,
             Description = q.Description,
+            Size = q.Size,
             PaidEntrance = q.PaidEntrance,
             StartDate = q.StartDate,
             EndDate = q.EndDate,
             User = q.User,
+            UserId = q.UserId,
             Reservations = q.Reservations.Select(reservation => new Reservation
             {
                 Id = reservation.Id,
@@ -29,14 +31,19 @@ namespace EventSuite.Core.Extra
             { 
                 Id = registration.Id,
                 EventId = registration.EventId,
-                DateCreated = registration.DateCreated
+                DateCreated = registration.DateCreated,
+                Tickets = registration.Tickets.Select(ticket => new Ticket
+                {
+                    Price = ticket.Price
+                }).ToList()
             }).ToList(),
             EventResources = q.EventResources.Select(eventResource => new EventResource
             { 
                 Id = eventResource.Id,
                 Amount = eventResource.Amount,
                 EventId = eventResource.EventId,
-                ResourceId = eventResource.ResourceId
+                ResourceId = eventResource.ResourceId,
+                Resource = new Resource() { Price = eventResource.Resource.Price}
             }).ToList(),
             DateCreated = q.DateCreated,
             DateUpdated = q.DateUpdated

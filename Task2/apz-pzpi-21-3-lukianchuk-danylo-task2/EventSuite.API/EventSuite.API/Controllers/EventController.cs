@@ -34,11 +34,25 @@ namespace EventSuite.API.Controllers
             var result = await _eventService.GetEventsAsync(getRequest.PageInfo);
             if (!result.Any() || result == null)
             {
-                _logger.Information("Advertisements not found");
-                return NotFound("Advertisements not found");
+                _logger.Information("Events not found");
+                return NotFound("Events not found");
             }
             var events = _mapper.Map<IEnumerable<EventResponse>>(result);
             return Ok(events);
+        }
+
+        [HttpGet]
+        [Route("finished-events/{userId}")]
+        public async Task<IActionResult> GetFinishedEventsByUserId(string userId, [FromQuery] GetRequest getRequest)
+        {
+            var result = await _eventService.GetFinishedEventsByUserIdAsync(userId, getRequest.PageInfo);
+            if (!result.Any() || result == null)
+            {
+                _logger.Information($"Finished events for user with id: {userId} not found");
+                return NotFound($"Finished events for user with id: {userId} not found");
+            }
+            var finishedEvents = _mapper.Map<IEnumerable<FinishedEventResponse>>(result);
+            return Ok(finishedEvents);
         }
 
         [HttpGet]
