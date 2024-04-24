@@ -4,6 +4,7 @@ using EventSuite.Core.Extra;
 using EventSuite.Core.Models;
 using EventSuite.Core.Resources;
 using EventSuite.DAL.Repositories.Interfaces;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,11 @@ namespace EventSuite.BLL.Services.Implementations
         public async Task<IEnumerable<Registration>> GetRegistrationsByEventIdAsync(int eventId)
         {
             return await _unitOfWork.Registrations.GetByConditionAsync(x => x.EventId == eventId, EntitySelector.RegistrationSelector);
+        }
+
+        public async Task<IEnumerable<Registration>> GetRegistrationsByUserIdAsync(string userId)
+        {
+            return await _unitOfWork.Registrations.GetByConditionAsync(x => x.UserId == userId, EntitySelector.RegistrationSelector);
         }
 
         public async Task<Registration> UpdateRegistrationAsync(int id, Registration registration)

@@ -16,5 +16,6 @@ namespace EventSuite.BLL.Services.Interfaces
         Task<IEnumerable<Registration>> GetRegistrationsAsync(PageInfo pageInfo);
         Task<bool> DeleteRegistrationAsync(int id);
         Task<IEnumerable<Registration>> GetRegistrationsByEventIdAsync(int eventId);
+        Task<IEnumerable<Registration>> GetRegistrationsByUserIdAsync(string userId);
     }
 }

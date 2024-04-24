@@ -57,7 +57,7 @@ namespace EventSuite.API.Controllers
 
         [HttpDelete]
         [Route("resource/{id}")]
-        public async Task<IActionResult> DeleteMall(int id)
+        public async Task<IActionResult> DeleteResource(int id)
         {
             var result = await _resourceService.DeleteResourceAsync(id);
             if (result is false)

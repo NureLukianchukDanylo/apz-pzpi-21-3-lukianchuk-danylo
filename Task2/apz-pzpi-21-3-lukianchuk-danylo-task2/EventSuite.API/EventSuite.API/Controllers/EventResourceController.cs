@@ -28,7 +28,7 @@ namespace EventSuite.API.Controllers
         }
 
         [HttpGet]
-        [Route("eventResources")]
+        [Route("event-resources")]
         public async Task<IActionResult> GetEventResources([FromQuery] GetRequest getRequest)
         {
             var result = await _eventResourceService.GetEventResourcesAsync(getRequest.PageInfo);
@@ -42,7 +42,7 @@ namespace EventSuite.API.Controllers
         }
 
         [HttpGet]
-        [Route("eventResource/{id}")]
+        [Route("event-resource/{id}")]
         public async Task<IActionResult> GetEventResource(int id)
         {
             var result = await _eventResourceService.GetEventResourceByIdAsync(id);
@@ -56,7 +56,7 @@ namespace EventSuite.API.Controllers
         }
 
         [HttpDelete]
-        [Route("eventResource/{id}")]
+        [Route("event-resource/{id}")]
         public async Task<IActionResult> DeleteEventResource(int id)
         {
             var result = await _eventResourceService.DeleteEventResourceAsync(id);
@@ -69,7 +69,7 @@ namespace EventSuite.API.Controllers
         }
 
         [HttpPost]
-        [Route("eventResource")]
+        [Route("event-resource")]
         public async Task<IActionResult> CreateEventResource(EventResourceRequest eventResourceRequest)
         {
             var eventResource = _mapper.Map<EventResource>(eventResourceRequest);
@@ -84,7 +84,7 @@ namespace EventSuite.API.Controllers
         }
 
         [HttpGet]
-        [Route("eventResources/{eventId}")]
+        [Route("event-resources/{eventId}")]
         public async Task<IActionResult> GetEventResourcesByEventId(int eventId)
         {
             var result = await _eventResourceService.GetEventResourcesByEventIdAsync(eventId);
@@ -98,7 +98,7 @@ namespace EventSuite.API.Controllers
         }
 
         [HttpPut]
-        [Route("eventResource/{id}")]
+        [Route("event-resource/{id}")]
         public async Task<IActionResult> UpdateEventResource(int id, EventResourceRequest eventResourceRequest)
         {
             var eventResource = _mapper.Map<EventResource>(eventResourceRequest);

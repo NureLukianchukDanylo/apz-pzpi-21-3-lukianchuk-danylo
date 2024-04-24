@@ -97,6 +97,20 @@ namespace EventSuite.API.Controllers
             return Ok(registrations);
         }
 
+        [HttpGet]
+        [Route("user-registrations/{userId}")]
+        public async Task<IActionResult> GetRegistrationsByUserId(string userId)
+        {
+            var result = await _registrationService.GetRegistrationsByUserIdAsync(userId);
+            if (!result.Any())
+            {
+                _logger.Error($"Registrations with user id: {userId} not found");
+                return NotFound($"Registrations with user id: {userId} not found");
+            }
+            var registrations = _mapper.Map<IEnumerable<RegistrationResponse>>(result);
+            return Ok(registrations);
+        }
+
         [HttpPut]
         [Route("registration/{id}")]
         public async Task<IActionResult> UpdateRegistration(int id, RegistrationRequest registrationRequest)
