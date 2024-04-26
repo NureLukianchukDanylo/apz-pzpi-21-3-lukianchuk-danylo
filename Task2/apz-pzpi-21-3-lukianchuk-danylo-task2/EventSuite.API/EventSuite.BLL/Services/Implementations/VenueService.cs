@@ -3,12 +3,6 @@ using EventSuite.Core.Extra;
 using EventSuite.Core.Models;
 using EventSuite.Core.Resources;
 using EventSuite.DAL.Repositories.Interfaces;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventSuite.BLL.Services.Implementations
 {

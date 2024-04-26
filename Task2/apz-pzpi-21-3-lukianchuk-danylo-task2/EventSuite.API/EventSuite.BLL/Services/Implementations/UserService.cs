@@ -23,6 +23,7 @@ namespace EventSuite.BLL.Services.Implementations
             this._configuration = configuration;
         }
 
+        // Method for registering user
         public async Task<IdentityResult> RegisterUserAsync(User user, string password, string role)
         {
             if (user == null)
@@ -39,6 +40,7 @@ namespace EventSuite.BLL.Services.Implementations
             return result;
         }
 
+        // Method for validating user
         public async Task<bool> ValidateUserAsync(string username, string password)
         {
             user = await _usersRepository.GetByUsernameAsync(username);
@@ -46,6 +48,7 @@ namespace EventSuite.BLL.Services.Implementations
             return result;
         }
 
+        // Method for generating tokens
         public async Task<string[]?> GenerateTokensAsync()
         {
             var token = await GenerateAccessTokenAsync();
@@ -53,9 +56,10 @@ namespace EventSuite.BLL.Services.Implementations
             user.RefreshToken = refreshToken;
             user.RefreshTokenExpiryTime = DateTime.Now.AddDays(Convert.ToDouble(GetConfiguration("refreshTokenExpiresInDays")));
             await _usersRepository.UpdateUser(user);
-            return new string[] { token, refreshToken };
+            return [token, refreshToken];
         }
 
+        // Method for generating access token
         private async Task<string> GenerateAccessTokenAsync()
         {
             var signingCredentials = GetSigningCredentials();
@@ -64,6 +68,7 @@ namespace EventSuite.BLL.Services.Implementations
             return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         }
 
+        // Method for refreshing tokens
         public async Task<string[]?> RefreshTokensAsync(string accessToken, string refreshToken)
         {
             var principal = GetPrincipalFromExpiredToken(accessToken);
@@ -78,6 +83,7 @@ namespace EventSuite.BLL.Services.Implementations
             return [newToken, newRefreshToken];
         }
 
+        // Method for revoking token
         public async Task<IdentityResult> RevokeToken(string username)
         {
             user = await _usersRepository.GetByUsernameAsync(username);
@@ -90,12 +96,14 @@ namespace EventSuite.BLL.Services.Implementations
             return res;
         }
 
+        // Method for getting all users
         public async Task<IEnumerable<User?>> GetUsersAsync()
         {
             var users = await _usersRepository.GetAllAsync();
             return users;
         }
 
+        // Method for getting user by id
         public async Task<string> GetRole(User user) 
         {
             var role = await _usersRepository.GetRolesForUserAsync(user);
@@ -141,6 +149,7 @@ namespace EventSuite.BLL.Services.Implementations
             return _configuration.GetSection("JwtConfig")[setting];
         }
 
+        // Method for generating refresh token
         private string GenerateRefreshTokenAsync()
         {
             var randomNumber = new byte[32];

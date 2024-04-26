@@ -1,27 +1,19 @@
 ﻿using AutoMapper;
 using EventSuite.BLL.Services.Interfaces;
-using EventSuite.Core.DTOs.Responses.Event;
 using EventSuite.Core.Extra;
 using EventSuite.Core.Models;
 using EventSuite.Core.Resources;
 using EventSuite.DAL.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventSuite.BLL.Services.Implementations
 {
     public class EventService : IEventService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-        public EventService(IUnitOfWork unitOfWork, IMapper mapper)
+        public EventService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
 
         public async Task<Event> CreateEventAsync(Event @event)
@@ -92,7 +84,7 @@ namespace EventSuite.BLL.Services.Implementations
             return true;
         }
 
-        private bool CheckDates(Event @event)
+        private static bool CheckDates(Event @event)
         {
             if (@event.StartDate >= @event.EndDate || @event.EndDate <= DateTime.Now)
                 return false;
@@ -107,17 +99,6 @@ namespace EventSuite.BLL.Services.Implementations
                 x => x.EndDate < DateTime.Now
             };
             var finishedEvents = await _unitOfWork.Events.GetPageWithMultiplePredicatesAsync(predicates, pageInfo, EntitySelector.EventSelector);
-            /*var result = new List<FinishedEventResponse>();
-            var res = new FinishedEventResponse();
-            foreach (var finishedEvent in finishedEvents)
-            {
-                res = _mapper.Map<FinishedEventResponse>(finishedEvent);
-                res.Visitors = finishedEvent.PaidEntrance ? finishedEvent.Registrations.Sum(x => x.Tickets.Count()) : finishedEvent.Registrations.Count();
-                res.TicketsIncome = finishedEvent.PaidEntrance ? finishedEvent.Registrations.Sum(x => x.Tickets.Sum(x => x.Price)) : 0;
-                res.ResourcesUsed = finishedEvent.EventResources.Count();
-                res.ResourcesSpendings = (decimal)finishedEvent.EventResources.Sum(x => x.Amount * x.Resource?.Price);
-                result.Add(res);
-            }*/
             return finishedEvents;
         }
     }

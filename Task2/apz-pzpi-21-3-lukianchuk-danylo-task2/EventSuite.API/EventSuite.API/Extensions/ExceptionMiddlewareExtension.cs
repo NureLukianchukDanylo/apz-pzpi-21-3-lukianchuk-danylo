@@ -13,6 +13,7 @@ namespace EventSuite.API.Extensions
     {
         private static readonly Serilog.ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
 
+        // Method for configuring exception handler and process exception
         public static void ConfigureExceptionHandler(this IApplicationBuilder app)
         {
             app.UseExceptionHandler(
@@ -39,6 +40,7 @@ namespace EventSuite.API.Extensions
                 });
         }
 
+        // Method for getting response status code
         public static HttpStatusCode GetResponse(Exception exception)
         {
             Exception exception1 = exception.InnerException ?? exception;

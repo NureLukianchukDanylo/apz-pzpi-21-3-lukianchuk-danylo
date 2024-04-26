@@ -17,20 +17,7 @@ namespace EventSuite.API.Extensions
 {
     public static class ServiceCollectionExtension
     {
-        public static void ConfigureCors(this IServiceCollection services)
-        {
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAllHeaders",
-                                       builder =>
-                                       {
-                                           builder.AllowAnyOrigin()
-                                               .AllowAnyHeader()
-                                               .AllowAnyMethod();
-                                       });
-            });
-        }
-
+        // Method for configuring swagger
         public static void ConfigureSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
@@ -62,6 +49,7 @@ namespace EventSuite.API.Extensions
             });
         }
 
+        // Method for registering services
         public static void RegisterServices(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
@@ -77,6 +65,7 @@ namespace EventSuite.API.Extensions
             services.AddScoped<IDatabaseService, DatabaseService>();
         }
 
+        // Method for registering repositories
         public static void RegisterRepositories(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -92,6 +81,7 @@ namespace EventSuite.API.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
         }
 
+        // Method for configuring jwt authentication
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
         {
             var jwtConfig = configuration.GetSection("jwtConfig");
@@ -119,6 +109,7 @@ namespace EventSuite.API.Extensions
             });
         }
 
+        // Method for configuring mappings
         public static void ConfigureMapping(this IServiceCollection services)
         {
             services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
@@ -138,6 +129,7 @@ namespace EventSuite.API.Extensions
             services.AddSingleton(mapperConfig.CreateMapper());
         }
 
+        // Method for configurinf localization
         public static void ConfigureLocalization(this IServiceCollection services)
         {
             services.AddLocalization(x => x.ResourcesPath = "Resources");
