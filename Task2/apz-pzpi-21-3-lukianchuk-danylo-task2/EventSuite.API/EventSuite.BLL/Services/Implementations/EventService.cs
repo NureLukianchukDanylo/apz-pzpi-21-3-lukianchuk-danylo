@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using EventSuite.BLL.Services.Interfaces;
+using EventSuite.Core.DTOs.Responses.Event;
 using EventSuite.Core.Extra;
 using EventSuite.Core.Models;
 using EventSuite.Core.Resources;
 using EventSuite.DAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore.Internal;
 using System.Linq.Expressions;
 
 namespace EventSuite.BLL.Services.Implementations
@@ -11,9 +13,11 @@ namespace EventSuite.BLL.Services.Implementations
     public class EventService : IEventService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public EventService(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        public EventService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<Event> CreateEventAsync(Event @event)
@@ -91,7 +95,7 @@ namespace EventSuite.BLL.Services.Implementations
             return true;
         }
 
-        public async Task<IEnumerable<Event>> GetFinishedEventsByUserIdAsync(string userId, PageInfo pageInfo)
+        public async Task<IEnumerable<FinishedEventResponse>> GetFinishedEventsByUserIdAsync(string userId, PageInfo pageInfo)
         {
             var predicates = new List<Expression<Func<Event, bool>>>
             {
@@ -99,7 +103,19 @@ namespace EventSuite.BLL.Services.Implementations
                 x => x.EndDate < DateTime.Now
             };
             var finishedEvents = await _unitOfWork.Events.GetPageWithMultiplePredicatesAsync(predicates, pageInfo, EntitySelector.EventSelector);
-            return finishedEvents;
+            var result = new List<FinishedEventResponse>();
+            var res = new FinishedEventResponse();
+            foreach (var finishedEvent in finishedEvents)
+            {
+                res = _mapper.Map<FinishedEventResponse>(finishedEvent);
+                res.Visitors = finishedEvent.PaidEntrance ? finishedEvent.Registrations.Sum(x => x.Tickets.Count()) : finishedEvent.Registrations.Count();
+                res.TicketsIncome = finishedEvent.PaidEntrance ? finishedEvent.Registrations.Sum(x => x.Tickets.Sum(x => x.Price)) : 0;
+                res.ResourcesUsed = finishedEvent.EventResources.Count();
+                res.ResourcesSpendings = (decimal)finishedEvent.EventResources.Sum(x => x.Amount * x.Resource?.Price);
+                res.RoomsUsed = finishedEvent.Reservations.Count();
+                result.Add(res);
+            }
+            return result;
         }
     }
 }

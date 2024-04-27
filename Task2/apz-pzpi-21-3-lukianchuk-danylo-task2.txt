@@ -1,0 +1,266 @@
+1 ОПИС АРХІТЕКТУРИ СИСТЕМИ
+
+Серверна частина проекту розроблена на мові програмування С# за допомогою фреймворку ASP.NET Core 8. У якості СУБД використовується Microsoft SQL Server. Також варто відзначити, що для зв’язку API із базою даних використовується Entity Framework Core 8.0. Крім того, для автентифікації та авторизації було застосовано ASP.NET Core Identity.
+	Серверна частина програмної системи має монолітну багаторівневу архітектуру, що включає у себе рівні: представлення, бізнес-логіки, доступу до даних та сервісів. Для цього було створено 4 окремих проекти в IDE:
+	1) EventSuite.API є початковою точкою, що запускає застосунок та відповідає за контролери, конфігурацію JWT та мапінгів, реєстрацію сервісів;
+	2) EventSuite.Core містить моделі для бази даних, Enums, відповідні DTO та налаштування мапінгу з моделі в DTO та назад.
+	3) EventSuite.DAL відповідає за доступ до даних через репозиторії та наповнення бази даних тестовими даними.
+	4) EventSuite.BLL містить сервіси, що відповідають за бізнес-логіку проекту застосунку.
+
+2 ПОБУДОВА ДІАГРАМИ РОЗГОРТАННЯ
+
+Також було зроблено діаграму розгортання (рис. 6) для програмної системи. Ця діаграма складається із 5 елементів: серверу, бази даних, веб-застосунку, мобільного застосунку та IoT пристрою («розумний» браслет). Усі елементи системи взаємодіють із сервером, який в свою чергу взаємодіє з базою даних. Веб-застосунок, мобільний застосунок та IoT пристрій взаємодіють із сервером через API за протоколом HTTP.
+
+3 ОПИС АРХІТЕКТУРИ СЕРВЕРНОЇ ЧАСТИНИ
+
+3.1 Аутентифікація
+
+	Опис архітектури серверної частини розпочнемо з аутентифікації. Аутентифікація користувачів у застосунку відбувається за допомогою JSON Web Token (додаток А).
+	Для того, щоб увійти у систему користувач надсилає адресу своєї електронної пошти та пароль. Після цього вони валідуються на сервері із використанням методів ASP.NET Identity:
+1	user = await _usersRepository.GetByUsernameAsync(username);
+2	var result = _user != null && await _usersRepository.CheckPasswordForUserAsync(_user, password);
+	Якщо дані, що ввів користувач співпадають із тими, що знаходяться в базі даних, то у відповідь йому відправляється токен доступу («access token»):
+1	var signingCredentials = GetSigningCredentials();
+2 	var claims = await GetClaims();
+3	var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
+4	return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+	Також генерується токен оновлення («refresh token») для користувача, що буде використовуватися для поновлення токену доступу, коли його термін вичерпається. Потім він зберігається у базі даних та відправляється користувачу:
+1	var randomNumber = new byte[32];
+2	using (var rng = RandomNumberGenerator.Create())
+3	{
+4		rng.GetBytes(randomNumber);
+5		string token = Convert.ToBase64String(randomNumber);
+6		return token;
+7	}
+	Після отримання вищезгаданих токенів користувач отримує повний доступ до системи.
+
+3.2 Обробник помилок 
+
+	Коли у системі виникає помилка, то викликається обробник помилок (додаток Б). Спочатку за допомогою бібліотеки Serilog логується, де виникла помилка та формується формат відповіді:
+1	Logger.Error(contextFeature.Error, "Error during executing {Context}", context.Request.Path.Value);
+2	context.Response.ContentType = "application/json";
+	Потім обробляємо цю помилку та повертаємо статус помилки для загального розуміння проблеми:
+1	Exception exception1 = exception.InnerException ?? exception;
+2	var code = exception1 switch
+3	{
+4		KeyNotFoundException
+5			or FileNotFoundException => HttpStatusCode.NotFound,
+6   		UnauthorizedAccessException
+7			or AuthenticationException => HttpStatusCode.Unauthorized,
+8		ArgumentNullException
+9			or NullReferenceException
+10			or ArgumentException
+11			or InvalidOperationException
+12			or DbUpdateException
+13			or AutoMapperMappingException => HttpStatusCode.BadRequest,
+14		_ => HttpStatusCode.InternalServerError,
+15	};
+16	return code;
+	Далі отриманий статус помилки і повідомлення, що прийшло із помилкою повертаються користувачу:
+1	await context.Response.WriteAsync(
+2		new ExceptionResponse()
+3		{
+4			StatusCode = (int) status,
+5			Message = contextFeature.Error.InnerException == null ? contextFeature.Error.Message : contextFeature.Error.InnerException.Message 
+6		}.ToString());
+	Цей механізм дозволяє обробити помилки без порушення роботи системи та дає користувачу можливість зрозуміти, причину помилки для подальшого її уникнення.
+
+3.3 Методи розширення
+
+	Для покращення структури коду використовуються методи розширення (додаток В). У спеціально відведеному для цього класі відбувається конфігурація JWT, що потім використовується для автентифікації користувачів:
+1	options.SaveToken = true;
+2	options.RequireHttpsMetadata = false;
+3	options.TokenValidationParameters = new TokenValidationParameters
+4	{
+5	ValidateIssuer = true,
+6	ValidateAudience = true,
+7	ValidateLifetime = true,
+8	ValidateIssuerSigningKey = true,
+9	ClockSkew = TimeSpan.Zero,
+10	ValidIssuer = jwtConfig["validIssuer"],
+11	ValidAudience = jwtConfig["validAudience"],
+12	IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+13	};
+	Також методи розширення використовуються для впровадження залежностей («Dependency Injection») для сервісів:
+1	services.AddScoped<IUserService, UserService>();
+2	services.AddScoped<IEventService, EventService>();
+3	services.AddScoped<IEventResourceService, EventResourceService>();
+4	services.AddScoped<ILocationService, LocationService>();
+5	services.AddScoped<IMallService, MallService>();
+6	services.AddScoped<IResourceService, ResourceService>();
+7	services.AddScoped<IRegistrationService, RegistrationService>();
+8	services.AddScoped<IReservationService, ReservationService>();
+9	services.AddScoped<ITicketService, TicketService>();
+10	services.AddScoped<IVenueService, VenueService>();
+11	services.AddScoped<IDatabaseService, DatabaseService>();
+	Таким чином підтримується чистота коду та спрощується впровадження нового функціоналу для програмної системи.
+
+4 ПОБУДОВА ДІАГРАМИ ПРЕЦЕДЕНТІВ
+
+Діаграму прецедентів (Use Case Diagram) було складено для розуміння функціоналу користувачів у системі (рис. 7). У системі є 4 актори: власник ТРЦ, організатор подій, відвідувач подій та адміністратор. Слід відмітити, що власник ТРЦ та організатор подій обидва можуть мати доступ до функціоналу відвідувача подій, але в іншому мають доступ тільки до відповідного їх ролям функціоналу. Адміністратор може мати доступ до всіх функцій системи. Організатор подій має доступ до управління подіями та ресурсами необхідними для їх проведення. Власник ТРЦ може управляти локаціями та ТРЦ. Відвідувач подій може реєструватися на події, бронювати квитки, а також переглядати інформацію про події.
+
+5 ПОБУДОВА ER-ДІАГРАМИ
+
+Для проектування бази даних було створено ER-модель даних (рис. 5). На ній зображено 10 сутностей: Event, Venue, Resource, Registration, Reservation, Mall, EventResource, Location, Ticket, User. На діаграмі наявні 11 зв’язків один-до-багатьох для наступних сутностей: Mall та Venue, Location та Mall, Venue та Reservation, Event та Reservation, User та Event, User та Registration, Event та Registration,  Event та EventResource, Resource та EventResource, Registration та Ticket. Також варто відмітити, що на діаграмі немає зв’язків багато-до-багатьох, що у базі даних мали б вигляд додаткових проміжних таблиць із зв’язками до відповідних сутностей.
+
+6 СПЕЦИФІКАЦІЯ REST
+
+Таблиця 1 – Специфікація REST
+Посилання	Метод	Опис методу
+/api/Auth/login	POST	Авторизація
+/api/Auth/register	POST	Реєстрація із роллю «User»
+/api/Auth/refresh	POST	Отримання нового «access» токену
+
+Продовження таблиці 1
+/api/Auth/register-admin	POST	Реєстрація користувачів з іншими ролями адміном
+/api/Auth/revoke	POST	Відкликання «refresh» токену
+/api/Event/events	GET	Отримати всі події
+/api/Event/events/{userId}	GET	Отримати всі створені події для користувача
+/api/Event/event/{id}	GET	Отримати подію за id
+/api/Event/event/{id}	DELETE	Видалити подію за id
+/api/Event/event/{id}	PUT	Оновити подію за id
+/api/Event/event	POST	Створити нову подію
+/api/Event/finished-events/{userId}	GET	Отримати статистику проведених подій для користувача
+/api/Venue/venues	GET	Отримати всі місця проведення
+/api/Venue/venues/{mallId}	GET	Отримати всі місця проведення за id ТРЦ
+/api/Venue/venue/{id}	GET	Отримати місце проведення за id
+/api/Venue/venue/{id}	DELETE	Видалити місце проведення за id
+/api/Venue/venue/{id}	PUT	Оновити місце проведення за id
+/api/Venue/venue	POST	Додати нову місце проведення
+/api/Mall/malls	GET	Отримати всі ТРЦ системи
+
+Продовження таблиці 1
+/api/Mall/malls/{locationId}	GET	Отримати всі ТРЦ системи за місцем розташування
+/api/Mall/mall/{id}	GET	Отримати ТРЦ системи за id
+/api/Mall/mall/{id}	DELETE	Видалити ТРЦ за id
+/api/Mall/mall/{id}	PUT	Оновити ТРЦ за id
+/api/Mall/mall	POST	Додати новий ТРЦ до системи
+/api/Registration/registrations	GET	Отримати реєстрації користувачів на події
+/api/Registration/user-registrations/{userId}	GET	Отримати всі реєстрації користувача на події
+/api/Registration/registration/ {id}	GET	Отримати реєстрацію на подію за id
+/api/Registration/registration/ {id}	DELETE	Видалити реєстрацію на подію за id
+/api/Registration/registration /{id}	PUT	Оновити реєстрацію на подію за id
+/api/Registration/registration	POST	Створити нову реєстрацію на подію
+/api/Registration/registrations/{eventId}	GET	Отримати всі реєстрації на подію
+/api/Location/locations	GET	Отримати всі локації
+/api/Location/location/{id}	GET	Отримати локацію за id
+/api/Location/location/{id}	DELETE	Видалити локацію за id
+/api/Location/location/{id}	PUT	Оновити локацію за id
+/api/Location/location	POST	Створити нову локацію
+
+Продовження таблиці 1
+/api/Resource/resources	GET	Отримати всі ресурси для подій
+/api/Resource/resource/{id}	GET	Отримати ресурс для подій за id
+/api/Resource/resource/{id}	DELETE	Видалити ресурс для подій за id
+/api/Resource/resource/{id}	PUT	Оновити ресурс для подій за id
+/api/Resource/resource	POST	Додати новий ресурс для подій
+/api/Reservation/reservations	GET	Отримати всі бронювання місць проведення
+/api/Reservation/reservations/{eventId}	GET	Отримати всі бронювання місць проведення для події
+/api/Reservation/reservation/ {id}	GET	Отримати бронювання місця проведення за id
+/api/Reservation/reservation/ {id}	DELETE	Видалити бронювання місця проведення за id
+/api/Reservation/reservation/ {id}	PUT	Оновити бронювання місця проведення за id
+/api/Reservation/reservation	POST	Створити нове бронювання місця проведення
+/api/Ticket/tickets	GET	Отримати всі квитки на події в системі
+/api/Ticket/ticket/{id}	GET	Отримати квиток на подію за id
+
+Кінець таблиці 1
+/api/Ticket/tickets/ {registrationId}	GET	Отримати всі квитки для реєстрації на подію за id
+/api/Ticket/ticket/{id}	DELETE	Видалити квиток на подію за id
+/api/Ticket/ticket/{id}	PUT	Оновити квиток за id
+/api/Ticket/ticket	POST	Купити квиток на подію
+/api/EventResource/eventResources	GET	Отримати всі ресурси задіяні у події
+/api/EventResource/eventResource/{id}	GET	Отримати ресурси задіяний у події за id
+/api/EventResource/eventResources/{eventId}	GET	Отримати всі ресурси задіяні у події за id події
+/api/EventResource/eventResource/{id}	DELETE	Видалити ресурс задіяний у події за id
+/api/EventResource/eventResource/{id}	PUT	Оновити ресурс задіяний у події за id
+/api/EventResource/eventResources	POST	Створити новий задіяний ресурс у події
+/api/User/users	GET	Отримати всіх користувачів
+/api/User/user/{username}	GET	Отримати користувача за ніком
+/api/User/user/{username}	DELETE	Видалити користувача за ніком
+/api/User/user/{username}	PUT	Оновити користувача за ніком
+/api/Database/backup	POST	Створити бекап бази даних
+
+7 ПОБУДОВА ДІАГРАМИ ПАКЕТІВ
+
+Діаграму пакетів (Package Diagram) було зроблено для демонстрації різноманітних шарів архітектури програмної системи (рис. 8). Діаграма показує залежності поміж пакетами та як вони використовують одне одного для виконання своїх задач. На ній зображені 9 пакетів: Event, Venue, Resource, Registration, Reservation, Mall, Location, Ticket, User.
+
+ВИСНОВКИ
+
+Під час виконання лабораторної роботи було створено серверну частину програмної системи управління рекламними відеопанелями «EventSuite».
+
+ДОДАТОК А
+
+Таблиця 1 – Специфікація REST
+Посилання	Метод	Опис методу
+/api/Auth/login	POST	Авторизація
+/api/Auth/register	POST	Реєстрація із роллю «User»
+/api/Auth/refresh	POST	Отримання нового «access» токену
+
+Продовження таблиці 1
+/api/Auth/register-admin	POST	Реєстрація користувачів з іншими ролями адміном
+/api/Auth/revoke	POST	Відкликання «refresh» токену
+/api/Event/events	GET	Отримати всі події
+/api/Event/events/{userId}	GET	Отримати всі створені події для користувача
+/api/Event/event/{id}	GET	Отримати подію за id
+/api/Event/event/{id}	DELETE	Видалити подію за id
+/api/Event/event/{id}	PUT	Оновити подію за id
+/api/Event/event	POST	Створити нову подію
+/api/Event/finished-events/{userId}	GET	Отримати статистику проведених подій для користувача
+/api/Venue/venues	GET	Отримати всі місця проведення
+/api/Venue/venues/{mallId}	GET	Отримати всі місця проведення за id ТРЦ
+/api/Venue/venue/{id}	GET	Отримати місце проведення за id
+/api/Venue/venue/{id}	DELETE	Видалити місце проведення за id
+/api/Venue/venue/{id}	PUT	Оновити місце проведення за id
+/api/Venue/venue	POST	Додати нову місце проведення
+/api/Mall/malls	GET	Отримати всі ТРЦ системи
+
+Продовження таблиці 1
+/api/Mall/malls/{locationId}	GET	Отримати всі ТРЦ системи за місцем розташування
+/api/Mall/mall/{id}	GET	Отримати ТРЦ системи за id
+/api/Mall/mall/{id}	DELETE	Видалити ТРЦ за id
+/api/Mall/mall/{id}	PUT	Оновити ТРЦ за id
+/api/Mall/mall	POST	Додати новий ТРЦ до системи
+/api/Registration/registrations	GET	Отримати реєстрації користувачів на події
+/api/Registration/user-registrations/{userId}	GET	Отримати всі реєстрації користувача на події
+/api/Registration/registration/ {id}	GET	Отримати реєстрацію на подію за id
+/api/Registration/registration/ {id}	DELETE	Видалити реєстрацію на подію за id
+/api/Registration/registration /{id}	PUT	Оновити реєстрацію на подію за id
+/api/Registration/registration	POST	Створити нову реєстрацію на подію
+/api/Registration/registrations/{eventId}	GET	Отримати всі реєстрації на подію
+/api/Location/locations	GET	Отримати всі локації
+/api/Location/location/{id}	GET	Отримати локацію за id
+/api/Location/location/{id}	DELETE	Видалити локацію за id
+/api/Location/location/{id}	PUT	Оновити локацію за id
+/api/Location/location	POST	Створити нову локацію
+
+Продовження таблиці 1
+/api/Resource/resources	GET	Отримати всі ресурси для подій
+/api/Resource/resource/{id}	GET	Отримати ресурс для подій за id
+/api/Resource/resource/{id}	DELETE	Видалити ресурс для подій за id
+/api/Resource/resource/{id}	PUT	Оновити ресурс для подій за id
+/api/Resource/resource	POST	Додати новий ресурс для подій
+/api/Reservation/reservations	GET	Отримати всі бронювання місць проведення
+/api/Reservation/reservations/{eventId}	GET	Отримати всі бронювання місць проведення для події
+/api/Reservation/reservation/ {id}	GET	Отримати бронювання місця проведення за id
+/api/Reservation/reservation/ {id}	DELETE	Видалити бронювання місця проведення за id
+/api/Reservation/reservation/ {id}	PUT	Оновити бронювання місця проведення за id
+/api/Reservation/reservation	POST	Створити нове бронювання місця проведення
+/api/Ticket/tickets	GET	Отримати всі квитки на події в системі
+/api/Ticket/ticket/{id}	GET	Отримати квиток на подію за id
+
+Кінець таблиці 1
+/api/Ticket/tickets/ {registrationId}	GET	Отримати всі квитки для реєстрації на подію за id
+/api/Ticket/ticket/{id}	DELETE	Видалити квиток на подію за id
+/api/Ticket/ticket/{id}	PUT	Оновити квиток за id
+/api/Ticket/ticket	POST	Купити квиток на подію
+/api/EventResource/eventResources	GET	Отримати всі ресурси задіяні у події
+/api/EventResource/eventResource/{id}	GET	Отримати ресурси задіяний у події за id
+/api/EventResource/eventResources/{eventId}	GET	Отримати всі ресурси задіяні у події за id події
+/api/EventResource/eventResource/{id}	DELETE	Видалити ресурс задіяний у події за id
+/api/EventResource/eventResource/{id}	PUT	Оновити ресурс задіяний у події за id
+/api/EventResource/eventResources	POST	Створити новий задіяний ресурс у події
+/api/User/users	GET	Отримати всіх користувачів
+/api/User/user/{username}	GET	Отримати користувача за ніком
+/api/User/user/{username}	DELETE	Видалити користувача за ніком
+/api/User/user/{username}	PUT	Оновити користувача за ніком
+/api/Database/backup	POST	Створити бекап бази даних

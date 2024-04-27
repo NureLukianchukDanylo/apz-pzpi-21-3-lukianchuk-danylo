@@ -51,8 +51,7 @@ namespace EventSuite.API.Controllers
                 _logger.Information($"Finished events for user with id: {userId} not found");
                 return NotFound($"Finished events for user with id: {userId} not found");
             }
-            var finishedEvents = _mapper.Map<IEnumerable<FinishedEventResponse>>(result);
-            return Ok(finishedEvents);
+            return Ok(result);
         }
 
         [HttpGet]
