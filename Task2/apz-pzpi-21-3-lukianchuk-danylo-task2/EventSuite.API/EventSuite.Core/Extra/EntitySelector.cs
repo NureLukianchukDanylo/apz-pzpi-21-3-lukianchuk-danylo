@@ -1,4 +1,5 @@
-﻿using EventSuite.Core.Models;
+﻿using EventSuite.Core.Enums;
+using EventSuite.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -127,7 +128,8 @@ namespace EventSuite.Core.Extra
             Id = q.Id,
             Price = q.Price,
             Type = q.Type,
-            Registration = q.Registration
+            Registration = q.Registration,
+            SmartBracelet = q.SmartBracelet
         };
 
         public static Expression<Func<Venue, Venue>> VenueSelector => q => new Venue
@@ -154,6 +156,27 @@ namespace EventSuite.Core.Extra
             Amount = q.Amount,
             Event = q.Event,
             Resource = q.Resource
+        };
+
+        public static Expression<Func<SmartBracelet, SmartBracelet>> SmartBraceletSelector => q => new SmartBracelet
+        {
+            Id = q.Id,
+            SerialNumber = q.SerialNumber,
+            Status = q.Status,
+            StartUsageDate = q.StartUsageDate,
+            EndUsageDate = q.EndUsageDate,
+            AccessLatitude1 = q.AccessLatitude1,
+            AccessLatitude2 = q.AccessLatitude2,
+            AccessLongitude1 = q.AccessLongitude1,
+            AccessLongitude2 = q.AccessLongitude2,
+            CurrentLatitude = q.CurrentLatitude,
+            CurrentLongitude = q.CurrentLongitude,
+            Tickets = q.Tickets.Select(ticket => new Ticket 
+            {
+                Id = ticket.Id,
+                Price = ticket.Price,
+                Type = ticket.Type,
+            }).ToList()
         };
     }
 }

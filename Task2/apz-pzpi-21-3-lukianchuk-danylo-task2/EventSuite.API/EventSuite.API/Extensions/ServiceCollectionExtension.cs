@@ -63,6 +63,7 @@ namespace EventSuite.API.Extensions
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<IVenueService, VenueService>();
             services.AddScoped<IDatabaseService, DatabaseService>();
+            services.AddScoped<ISmartBraceletService, SmartBraceletService>();
         }
 
         // Method for registering repositories
@@ -78,6 +79,7 @@ namespace EventSuite.API.Extensions
             services.AddTransient<IGenericRepository<Venue>, GenericRepository<Venue>>();
             services.AddTransient<IGenericRepository<EventResource>, GenericRepository<EventResource>>();
             services.AddTransient<IGenericRepository<Reservation>, GenericRepository<Reservation>>();
+            services.AddTransient<IGenericRepository<SmartBracelet>, GenericRepository<SmartBracelet>>();
             services.AddScoped<IUserRepository, UserRepository>();
         }
 
@@ -125,6 +127,7 @@ namespace EventSuite.API.Extensions
                 map.AddProfile<ResourceMappingProfile>();
                 map.AddProfile<TicketMappingProfile>();
                 map.AddProfile<VenueMappingProfile>();
+                map.AddProfile<SmartBraceletMappingProfile>();
             });
             services.AddSingleton(mapperConfig.CreateMapper());
         }

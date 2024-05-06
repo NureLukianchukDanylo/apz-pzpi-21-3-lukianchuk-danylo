@@ -103,4 +103,10 @@
   <data name="Invalid date" xml:space="preserve">
     <value>Неправильні дати</value>
   </data>
+  <data name="Not active" xml:space="preserve">
+    <value>Цей браслет неактивний</value>
+  </data>
+  <data name="No access" xml:space="preserve">
+    <value>Цей розумний браслет не має доступу до цієї зони. Користувач повинен негайно піти</value>
+  </data>
 </root>

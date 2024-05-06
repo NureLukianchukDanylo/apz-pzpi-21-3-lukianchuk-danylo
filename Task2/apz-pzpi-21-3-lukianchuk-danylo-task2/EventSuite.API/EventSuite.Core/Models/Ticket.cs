@@ -13,5 +13,7 @@ namespace EventSuite.Core.Models
         public TicketType Type { get; set; }
         public int? RegistrationId { get; set; }
         public virtual Registration? Registration { get; set; }
+        public int? SmartBraceletId { get; set; }
+        public virtual SmartBracelet? SmartBracelet { get; set; }
     }
 }

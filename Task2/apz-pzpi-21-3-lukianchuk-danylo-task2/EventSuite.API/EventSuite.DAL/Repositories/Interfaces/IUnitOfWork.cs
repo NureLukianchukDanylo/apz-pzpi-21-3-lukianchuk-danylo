@@ -27,6 +27,7 @@ namespace EventSuite.DAL.Repositories.Interfaces
         IGenericRepository<Ticket> Tickets { get; }
 
         IGenericRepository<Venue> Venues { get; }
+        IGenericRepository<SmartBracelet> SmartBracelets { get; }
 
         Task CreateDatabaseBackupAsync(string path, string database);
     }

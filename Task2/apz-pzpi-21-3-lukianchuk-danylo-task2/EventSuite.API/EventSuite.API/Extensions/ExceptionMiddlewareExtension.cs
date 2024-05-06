@@ -6,6 +6,7 @@ using EventSuite.Core.DTOs.Responses.Exception;
 using System.Net;
 using System.Reflection;
 using System.Security.Authentication;
+using EventSuite.Core.Extra;
 
 namespace EventSuite.API.Extensions
 {
@@ -52,6 +53,7 @@ namespace EventSuite.API.Extensions
                                     or AuthenticationException => HttpStatusCode.Unauthorized,
                 ArgumentNullException
                                     or NullReferenceException
+                                    or SmartBraceletException
                                     or ArgumentException
                                     or InvalidOperationException
                                     or DbUpdateException

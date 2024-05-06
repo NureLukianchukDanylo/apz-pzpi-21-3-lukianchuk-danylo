@@ -159,6 +159,22 @@ namespace EventSuite.DAL.Data
                 await _unitOfWork.Registrations.AddManyAsync(registrations);
                 await _context.SaveChangesAsync();
             }
+            var smartBracelets = await _unitOfWork.SmartBracelets.GetAllAsync();
+            if (!smartBracelets.Any())
+            {
+                smartBracelets = new Faker<SmartBracelet>()
+                    .RuleFor(c => c.SerialNumber, f => f.Random.Int(1000, 9999).ToString())
+                    .RuleFor(c => c.Status, SmartBraceletStatus.Active)
+                    .RuleFor(c => c.StartUsageDate, f => f.Date.Future())
+                    .RuleFor(c => c.EndUsageDate, f => f.Date.Past())
+                    .RuleFor(c => c.AccessLatitude1, f => f.Random.Double(-90, 90))
+                    .RuleFor(c => c.AccessLatitude2, f => f.Random.Double(-90, 90))
+                    .RuleFor(c => c.AccessLongitude1, f => f.Random.Double(-180, 180))
+                    .RuleFor(c => c.AccessLongitude2, f => f.Random.Double(-180, 180))
+                    .Generate(5).ToList();
+                await _unitOfWork.SmartBracelets.AddManyAsync(smartBracelets);
+                await _context.SaveChangesAsync();
+            }
             var tickets = await _unitOfWork.Tickets.GetAllAsync();
             if (!tickets.Any())
             {
@@ -166,6 +182,7 @@ namespace EventSuite.DAL.Data
                     .RuleFor(q => q.Price, f => f.Random.Decimal(100, 3000))
                     .RuleFor(i => i.Type, TicketType.Regular)
                     .RuleFor(q => q.RegistrationId, registrations.FirstOrDefault()?.Id)
+                    .RuleFor(q => q.SmartBraceletId, smartBracelets.FirstOrDefault()?.Id)
                     .Generate(5).ToList();
                 await _unitOfWork.Tickets.AddManyAsync(tickets);
                 await _context.SaveChangesAsync();

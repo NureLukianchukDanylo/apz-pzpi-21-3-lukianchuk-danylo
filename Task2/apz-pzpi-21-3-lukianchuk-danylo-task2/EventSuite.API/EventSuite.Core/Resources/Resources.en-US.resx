@@ -103,4 +103,10 @@
   <data name="Invalid date" xml:space="preserve">
     <value>Dates are not valid</value>
   </data>
+  <data name="Not active" xml:space="preserve">
+    <value>This smart bracelet is inactive</value>
+  </data>
+  <data name="No access" xml:space="preserve">
+    <value>This smart bracelet has no access to this zone. The user should leave immediately</value>
+  </data>
 </root>

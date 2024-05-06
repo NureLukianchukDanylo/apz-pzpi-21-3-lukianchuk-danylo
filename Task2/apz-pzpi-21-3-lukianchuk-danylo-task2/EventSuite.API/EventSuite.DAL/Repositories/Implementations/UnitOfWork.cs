@@ -2,11 +2,6 @@
 using EventSuite.Core.Models;
 using EventSuite.DAL.Data;
 using EventSuite.DAL.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventSuite.DAL.Repositories.Implementations
 {
@@ -22,6 +17,7 @@ namespace EventSuite.DAL.Repositories.Implementations
         private readonly IGenericRepository<Resource> _resourceRepository;
         private readonly IGenericRepository<Ticket> _ticketRepository;
         private readonly IGenericRepository<Venue> _venueRepository;
+        private readonly IGenericRepository<SmartBracelet> _smartBraceletRepository;
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -35,6 +31,7 @@ namespace EventSuite.DAL.Repositories.Implementations
             _resourceRepository = new GenericRepository<Resource>(_context);
             _ticketRepository = new GenericRepository<Ticket>(_context);
             _venueRepository = new GenericRepository<Venue>(_context);
+            _smartBraceletRepository = new GenericRepository<SmartBracelet>(_context);
         }
 
         public IGenericRepository<Event> Events => _eventRepository;
@@ -54,6 +51,8 @@ namespace EventSuite.DAL.Repositories.Implementations
         public IGenericRepository<Ticket> Tickets => _ticketRepository;
 
         public IGenericRepository<Venue> Venues => _venueRepository;
+
+        public IGenericRepository<SmartBracelet> SmartBracelets => _smartBraceletRepository;
 
         public async Task CreateDatabaseBackupAsync(string path, string database) 
         {
