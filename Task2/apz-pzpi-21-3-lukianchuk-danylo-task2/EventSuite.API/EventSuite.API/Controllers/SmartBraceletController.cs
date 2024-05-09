@@ -106,7 +106,7 @@ namespace EventSuite.API.Controllers
 
         [HttpPut]
         [Route("smart-bracelet/{id}/coordinates")]
-        [Authorize]
+        [Authorize(Roles = "Admin, Organizator")]
         public async Task<IActionResult> GetCoordinates(int id)
         {
             var result = await _smartBraceletService.UpdateCoordinates(id);
@@ -125,8 +125,8 @@ namespace EventSuite.API.Controllers
             var result = await _smartBraceletService.GrantAccess(id);
             if (result is false)
             {
-                _logger.Error($"Smart bracelet with id: {id} not found. Access denied");
-                return NotFound($"Smart bracelet with id: {id} not found. Access denied");
+                _logger.Error($"Access denied");
+                return NotFound($"Access denied");
             }
             return Ok("Access granted");
         }
