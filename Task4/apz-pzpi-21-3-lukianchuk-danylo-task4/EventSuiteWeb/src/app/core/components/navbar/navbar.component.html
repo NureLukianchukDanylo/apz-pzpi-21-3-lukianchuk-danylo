@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container">
+      <a class="navbar-brand" href="/home">Smart Ad Signage</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" [routerLink]="['/ad-campaigns']">Ad Campaigns</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" [routerLink]="['/panels']">Panels</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" [routerLink]="['/advertisements']">Advertisements</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" [routerLink]="['/campaign-ads']">Campaign Ads</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" [routerLink]="['/locations']">Locations</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" [routerLink]="['/iot-devices']">IoT Devices</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" [routerLink]="['/queues']">Queues</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" [routerLink]="['/users']">Users</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Database
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" [routerLink]="['/backup']">Create backup</a></li>
+            </ul>
+          </li>
+          <li class="nav-item " *ngIf="isUserAuthenticated()">
+            <a class="nav-link active " href="home" (click)="logOut()">Log out</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>

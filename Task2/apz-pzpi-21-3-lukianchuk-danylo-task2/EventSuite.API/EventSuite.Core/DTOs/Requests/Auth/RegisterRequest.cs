@@ -15,7 +15,7 @@ namespace EventSuite.Core.DTOs.Requests.Auth
         [Required(ErrorMessage = "Last name is required")]
         public string LastName { get; set; }
         public string? CompanyName { get; set; }
-        public string? Role { get; set; }
+        public string? Role { get; set; } = "User";
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress]
