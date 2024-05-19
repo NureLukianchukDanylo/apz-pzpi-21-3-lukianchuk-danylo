@@ -1,0 +1,37 @@
+<div class="container">
+    <h1 class="mt-3">Location List</h1>
+
+    <div class="d-flex justify-content-end mt-3">
+        <a [routerLink]="['/add-location']" class="btn btn-primary">Add location</a>    
+    </div>
+
+    <ng-container *ngIf="locations$ | async as locations">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Country</th>
+                        <th>City</th>
+                        <th>Street</th>
+                        <th>Street Type</th>
+                        <th>Building Number</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let location of locations">
+                        <td>{{location.id}}</td>
+                        <td>{{location.country}}</td>
+                        <td>{{location.city}}</td>
+                        <td>{{location.streetType}}</td>
+                        <td>{{location.street}}</td>
+                        <td>{{location.buildingNumber}}</td>
+                        <td>
+                            <a class="btn btn-warning" [routerLink]="['/edit-location', location.id]">Edit</a>
+                            <button type="button" class="btn btn-danger ms-3" (click)="onDelete(location.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+</div>

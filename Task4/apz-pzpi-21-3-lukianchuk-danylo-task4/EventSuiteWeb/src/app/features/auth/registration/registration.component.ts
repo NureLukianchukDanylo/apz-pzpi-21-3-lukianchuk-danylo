@@ -2,9 +2,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticatedResponse } from '../models/authenticated-response';
-import { RegisterRequest } from 'src/app/api/models';
-//import { RegistrationRequest } from '../models/registration-request.model';
+import { RegisterRequest } from 'src/app/api/models'
 import { AuthService } from 'src/app/api/services';
 
 @Component({

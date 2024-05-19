@@ -22,7 +22,7 @@ namespace SmartAdSignage.API.Controllers
         public async Task<IActionResult> CreateBackup() 
         {
             await _databaseService.CreateBackupAsync();
-            return Ok("Database backup was created successfully");
+            return Ok();
         }
     }
 }

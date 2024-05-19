@@ -1,5 +1,6 @@
 ﻿using EventSuite.Core.DTOs.Responses.Mall;
 using EventSuite.Core.DTOs.Responses.Reservation;
+using EventSuite.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace EventSuite.Core.DTOs.Responses.Venue
     public class VenueResponse
     {
         public int Id { get; set; }
-        public string? Type { get; set; }
+        public VenueType Type { get; set; }
         public string? Description { get; set; }
         public double? Square { get; set; }
         public int MaxSize { get; set; }

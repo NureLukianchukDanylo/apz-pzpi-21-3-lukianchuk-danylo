@@ -19,6 +19,7 @@ import { apiLocationLocationPost } from '../fn/location/api-location-location-po
 import { ApiLocationLocationPost$Params } from '../fn/location/api-location-location-post';
 import { apiLocationLocationsGet } from '../fn/location/api-location-locations-get';
 import { ApiLocationLocationsGet$Params } from '../fn/location/api-location-locations-get';
+import { Location } from 'src/app/api/models/location-model';
 
 @Injectable({ providedIn: 'root' })
 export class LocationService extends BaseService {
@@ -35,7 +36,7 @@ export class LocationService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiLocationLocationsGet$Response(params?: ApiLocationLocationsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  apiLocationLocationsGet$Response(params?: ApiLocationLocationsGet$Params, context?: HttpContext): Observable<Location[]> {
     return apiLocationLocationsGet(this.http, this.rootUrl, params, context);
   }
 
@@ -45,9 +46,9 @@ export class LocationService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiLocationLocationsGet(params?: ApiLocationLocationsGet$Params, context?: HttpContext): Observable<void> {
+  apiLocationLocationsGet(params?: ApiLocationLocationsGet$Params, context?: HttpContext): Observable<Location[]> {
     return this.apiLocationLocationsGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: Location[]): Location[] => r)
     );
   }
 

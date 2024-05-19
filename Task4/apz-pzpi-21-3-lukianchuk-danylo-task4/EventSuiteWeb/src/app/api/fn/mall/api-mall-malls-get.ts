@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
+import { Mall } from '../../models/mall-model';
 
 
 export interface ApiMallMallsGet$Params {
@@ -12,7 +13,7 @@ export interface ApiMallMallsGet$Params {
   'PageInfo.Number'?: number;
 }
 
-export function apiMallMallsGet(http: HttpClient, rootUrl: string, params?: ApiMallMallsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+export function apiMallMallsGet(http: HttpClient, rootUrl: string, params?: ApiMallMallsGet$Params, context?: HttpContext): Observable<Mall[]> {
   const rb = new RequestBuilder(rootUrl, apiMallMallsGet.PATH, 'get');
   if (params) {
     rb.query('PageInfo.Size', params['PageInfo.Size'], {"style":"form"});
@@ -20,11 +21,11 @@ export function apiMallMallsGet(http: HttpClient, rootUrl: string, params?: ApiM
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: '*/*', context })
   ).pipe(
-    filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
-    map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+    filter((r: any): r is HttpResponse<Mall[]> => r instanceof HttpResponse),
+    map((r: HttpResponse<Mall[]>) => {
+      return r.body as Mall[];
     })
   );
 }

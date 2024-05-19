@@ -66,6 +66,7 @@ namespace EventSuite.BLL.Services.Implementations
             if (existingRegistration == null)
                 return null;
             existingRegistration.EventId = registration.EventId;
+            existingRegistration.UserId = registration.UserId;
             existingRegistration.DateUpdated = DateTime.Now;
             var result = _unitOfWork.Registrations.Update(existingRegistration);
             await _unitOfWork.Registrations.SaveAsync();

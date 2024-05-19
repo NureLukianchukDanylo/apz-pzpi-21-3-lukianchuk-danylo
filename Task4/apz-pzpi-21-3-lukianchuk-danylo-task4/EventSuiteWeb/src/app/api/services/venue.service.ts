@@ -21,6 +21,7 @@ import { apiVenueVenuesGet } from '../fn/venue/api-venue-venues-get';
 import { ApiVenueVenuesGet$Params } from '../fn/venue/api-venue-venues-get';
 import { apiVenueVenuesMallIdGet } from '../fn/venue/api-venue-venues-mall-id-get';
 import { ApiVenueVenuesMallIdGet$Params } from '../fn/venue/api-venue-venues-mall-id-get';
+import { Venue } from '../models/venue-model';
 
 @Injectable({ providedIn: 'root' })
 export class VenueService extends BaseService {
@@ -37,7 +38,7 @@ export class VenueService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiVenueVenuesGet$Response(params?: ApiVenueVenuesGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  apiVenueVenuesGet$Response(params?: ApiVenueVenuesGet$Params, context?: HttpContext): Observable<Venue[]> {
     return apiVenueVenuesGet(this.http, this.rootUrl, params, context);
   }
 
@@ -47,9 +48,9 @@ export class VenueService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiVenueVenuesGet(params?: ApiVenueVenuesGet$Params, context?: HttpContext): Observable<void> {
+  apiVenueVenuesGet(params?: ApiVenueVenuesGet$Params, context?: HttpContext): Observable<Venue[]> {
     return this.apiVenueVenuesGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: Venue[]): Venue[] => r)
     );
   }
 

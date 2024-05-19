@@ -135,6 +135,7 @@ namespace EventSuite.Core.Extra
         public static Expression<Func<Venue, Venue>> VenueSelector => q => new Venue
         {
             Id = q.Id,
+            Type = q.Type,
             Description = q.Description,
             Square = q.Square,
             MaxSize = q.MaxSize,

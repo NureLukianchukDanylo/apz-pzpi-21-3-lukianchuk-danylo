@@ -1,0 +1,33 @@
+<div class="container">
+    <h1 class="mt-3">Resource List</h1>
+
+    <div class="d-flex justify-content-end mt-3">
+        <a [routerLink]="['/add-resource']" class="btn btn-primary">Add Resource</a>    
+    </div>
+
+    <ng-container *ngIf="resources$ | async as resources">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Type</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let resource of resources">
+                        <td>{{resource.id}}</td>
+                        <td>{{resource.name}}</td>
+                        <td>{{resource.price}}</td>
+                        <td>{{resource.type}}</td>
+                        <td>
+                            <a class="btn btn-warning" [routerLink]="['/edit-resource', resource.id]">Edit</a>
+                            <button type="button" class="btn btn-danger ms-3" (click)="onDelete(resource.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+</div>

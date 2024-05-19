@@ -17,6 +17,7 @@ import { apiUserUsernamePut } from '../fn/user/api-user-username-put';
 import { ApiUserUsernamePut$Params } from '../fn/user/api-user-username-put';
 import { apiUserUsersGet } from '../fn/user/api-user-users-get';
 import { ApiUserUsersGet$Params } from '../fn/user/api-user-users-get';
+import { User } from '../models/user-model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService extends BaseService {
@@ -33,7 +34,7 @@ export class UserService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiUserUsersGet$Response(params?: ApiUserUsersGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  apiUserUsersGet$Response(params?: ApiUserUsersGet$Params, context?: HttpContext): Observable<User[]> {
     return apiUserUsersGet(this.http, this.rootUrl, params, context);
   }
 
@@ -43,9 +44,9 @@ export class UserService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiUserUsersGet(params?: ApiUserUsersGet$Params, context?: HttpContext): Observable<void> {
+  apiUserUsersGet(params?: ApiUserUsersGet$Params, context?: HttpContext): Observable<User[]> {
     return this.apiUserUsersGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: User[]): User[] => r)
     );
   }
 
@@ -58,7 +59,7 @@ export class UserService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiUserUserNameGet$Response(params: ApiUserUserNameGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  apiUserUserNameGet$Response(params: ApiUserUserNameGet$Params, context?: HttpContext): Observable<User> {
     return apiUserUserNameGet(this.http, this.rootUrl, params, context);
   }
 
@@ -68,9 +69,9 @@ export class UserService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiUserUserNameGet(params: ApiUserUserNameGet$Params, context?: HttpContext): Observable<void> {
+  apiUserUserNameGet(params: ApiUserUserNameGet$Params, context?: HttpContext): Observable<User> {
     return this.apiUserUserNameGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: User): User => r)
     );
   }
 

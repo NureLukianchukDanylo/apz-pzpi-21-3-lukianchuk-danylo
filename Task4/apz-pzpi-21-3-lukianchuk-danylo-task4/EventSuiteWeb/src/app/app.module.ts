@@ -10,6 +10,28 @@ import { HomeComponent } from './core/components/home/home.component';
 import { NavbarComponent } from './core/components/navbar/navbar.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { RegistrationComponent } from './features/auth/registration/registration.component';
+import { BackupComponent } from './features/database/backup/backup.component';
+import { EditUserComponent } from './features/users/edit-user/edit-user.component';
+import { GetUsersComponent } from './features/users/get-users/get-users.component';
+import { AddEventComponent } from './features/event/add-event/add-event.component';
+import { EditEventComponent } from './features/event/edit-event/edit-event.component';
+import { GetEventsComponent } from './features/event/get-events/get-events.component';
+import { AddVenueComponent } from './features/venue/add-venue/add-venue.component';
+import { EditVenueComponent } from './features/venue/edit-venue/edit-venue.component';
+import { GetVenuesComponent } from './features/venue/get-venues/get-venues.component';
+import { AddResourceComponent } from './features/resource/add-resource/add-resource.component';
+import { EditResourceComponent } from './features/resource/edit-resource/edit-resource.component';
+import { GetResourcesComponent } from './features/resource/get-resources/get-resources.component';
+import { AddLocationComponent } from './features/location/add-location/add-location.component';
+import { EditLocationComponent } from './features/location/edit-location/edit-location.component';
+import { GetLocationsComponent } from './features/location/get-locations/get-locations.component';
+import { AddMallComponent } from './features/mall/add-mall/add-mall.component';
+import { EditMallComponent } from './features/mall/edit-mall/edit-mall.component';
+import { GetMallsComponent } from './features/mall/get-malls/get-malls.component';
+import { GetFinishedEventsComponent } from './features/event/get-finished-events/get-finished-events.component';
+import { AddRegistrationComponent } from './features/registration/add-registration/add-registration.component';
+import { EditRegistrationComponent } from './features/registration/edit-registration/edit-registration.component';
+import { GetRegistrationsComponent } from './features/registration/get-registrations/get-registrations.component';
 
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
@@ -22,7 +44,29 @@ export function tokenGetter() {
     HomeComponent,
     NavbarComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    BackupComponent,
+    EditUserComponent,
+    GetUsersComponent,
+    AddEventComponent,
+    EditEventComponent,
+    GetEventsComponent,
+    AddVenueComponent,
+    EditVenueComponent,
+    GetVenuesComponent,
+    AddResourceComponent,
+    EditResourceComponent,
+    GetResourcesComponent,
+    AddLocationComponent,
+    EditLocationComponent,
+    GetLocationsComponent,
+    AddMallComponent,
+    EditMallComponent,
+    GetMallsComponent,
+    GetFinishedEventsComponent,
+    AddRegistrationComponent,
+    EditRegistrationComponent,
+    GetRegistrationsComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +76,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["localhost:5000"],
+        allowedDomains: ["localhost:5001"],
         disallowedRoutes: []
       }
     }),

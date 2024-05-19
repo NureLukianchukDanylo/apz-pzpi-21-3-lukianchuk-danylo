@@ -1,0 +1,40 @@
+<div class="container">
+    <h1 class="mt-3">Event List</h1>
+
+    <div class="d-flex justify-content-end mt-3">
+        <a [routerLink]="['/get-finished-events']" class="btn btn-primary me-2">Get Finished</a> 
+        <a [routerLink]="['/add-event']" class="btn btn-primary">Add Event</a>    
+    </div>
+
+    <ng-container *ngIf="events$ | async as events">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Paid Entrance</th>
+                        <th>Size</th>
+                        <th>User Id</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let event of events">
+                        <td>{{event.id}}</td>
+                        <td>{{event.name}}</td>
+                        <td>{{event.startDate | date:'short'}}</td>
+                        <td>{{event.endDate | date:'short'}}</td>
+                        <td>{{event.paidEntrance ? "Yes" : "No"}}</td>
+                        <td>{{event.size}}</td>
+                        <td>{{event.userId}}</td>
+                        <td>
+                            <a class="btn btn-warning" [routerLink]="['/edit-event', event.id]">Edit</a>
+                            <button type="button" class="btn btn-danger ms-3" (click)="onDelete(event.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+</div>

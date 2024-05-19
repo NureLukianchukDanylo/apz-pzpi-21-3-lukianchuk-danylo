@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
+import { Event } from '../../models/event-model';
 
 
 export interface ApiEventEventsGet$Params {
@@ -12,7 +13,7 @@ export interface ApiEventEventsGet$Params {
   'PageInfo.Number'?: number;
 }
 
-export function apiEventEventsGet(http: HttpClient, rootUrl: string, params?: ApiEventEventsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+export function apiEventEventsGet(http: HttpClient, rootUrl: string, params?: ApiEventEventsGet$Params, context?: HttpContext): Observable<Event[]> {
   const rb = new RequestBuilder(rootUrl, apiEventEventsGet.PATH, 'get');
   if (params) {
     rb.query('PageInfo.Size', params['PageInfo.Size'], {"style":"form"});
@@ -20,11 +21,11 @@ export function apiEventEventsGet(http: HttpClient, rootUrl: string, params?: Ap
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: '*/*', context })
   ).pipe(
-    filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
-    map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+    filter((r: any): r is HttpResponse<Event[]> => r instanceof HttpResponse),
+    map((r: HttpResponse<Event[]>) => {
+      return r.body as Event[];
     })
   );
 }

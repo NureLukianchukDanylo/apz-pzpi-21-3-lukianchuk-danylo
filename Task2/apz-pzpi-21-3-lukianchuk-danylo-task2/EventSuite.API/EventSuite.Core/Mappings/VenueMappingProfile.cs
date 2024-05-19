@@ -14,10 +14,8 @@ namespace EventSuite.Core.Mappings
     {
         public VenueMappingProfile() 
         {
-            CreateMap<Venue, VenuePropsResponse>()
-                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString())).ReverseMap();
-            CreateMap<Venue, VenueResponse>()
-                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString())).ReverseMap();
+            CreateMap<Venue, VenuePropsResponse>().ReverseMap();
+            CreateMap<Venue, VenueResponse>().ReverseMap();
             CreateMap<Venue, VenueRequest>().ReverseMap();
         }
     }

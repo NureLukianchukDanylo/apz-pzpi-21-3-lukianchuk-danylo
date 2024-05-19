@@ -14,11 +14,9 @@ namespace EventSuite.Core.Mappings
     {
         public ResourceMappingProfile()
         {
-            CreateMap<Resource, ResourceResponse>()
-                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString())).ReverseMap();
+            CreateMap<Resource, ResourceResponse>().ReverseMap();
             CreateMap<ResourceRequest, Resource>().ReverseMap();
-            CreateMap<Resource, ResourcePropsResponse>()
-                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString())).ReverseMap();
+            CreateMap<Resource, ResourcePropsResponse>().ReverseMap();
         }
     }
 }

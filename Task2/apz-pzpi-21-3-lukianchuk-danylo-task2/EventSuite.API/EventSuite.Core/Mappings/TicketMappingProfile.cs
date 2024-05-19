@@ -14,11 +14,9 @@ namespace EventSuite.Core.Mappings
     {
         public TicketMappingProfile()
         {
-            CreateMap<Ticket, TicketPropsResponse>()
-                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString())).ReverseMap();
+            CreateMap<Ticket, TicketPropsResponse>().ReverseMap();
             CreateMap<TicketRequest, Ticket>().ReverseMap();
-            CreateMap<Ticket, TicketResponse>()
-                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString())).ReverseMap();
+            CreateMap<Ticket, TicketResponse>().ReverseMap();
         }
     }
 }

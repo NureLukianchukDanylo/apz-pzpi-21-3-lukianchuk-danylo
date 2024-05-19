@@ -19,6 +19,7 @@ import { apiResourceResourcePost } from '../fn/resource/api-resource-resource-po
 import { ApiResourceResourcePost$Params } from '../fn/resource/api-resource-resource-post';
 import { apiResourceResourcesGet } from '../fn/resource/api-resource-resources-get';
 import { ApiResourceResourcesGet$Params } from '../fn/resource/api-resource-resources-get';
+import { Resource } from '../models/resource-model';
 
 @Injectable({ providedIn: 'root' })
 export class ResourceService extends BaseService {
@@ -35,7 +36,7 @@ export class ResourceService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiResourceResourcesGet$Response(params?: ApiResourceResourcesGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  apiResourceResourcesGet$Response(params?: ApiResourceResourcesGet$Params, context?: HttpContext): Observable<Resource[]> {
     return apiResourceResourcesGet(this.http, this.rootUrl, params, context);
   }
 
@@ -45,9 +46,9 @@ export class ResourceService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiResourceResourcesGet(params?: ApiResourceResourcesGet$Params, context?: HttpContext): Observable<void> {
+  apiResourceResourcesGet(params?: ApiResourceResourcesGet$Params, context?: HttpContext): Observable<Resource[]> {
     return this.apiResourceResourcesGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: Resource[]): Resource[] => r)
     );
   }
 

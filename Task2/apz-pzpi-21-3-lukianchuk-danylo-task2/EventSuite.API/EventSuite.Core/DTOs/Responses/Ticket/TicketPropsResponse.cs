@@ -11,6 +11,6 @@ namespace EventSuite.Core.DTOs.Responses.Ticket
     {
         public int Id { get; set; }
         public decimal Price { get; set; }
-        public string? Type { get; set; }
+        public TicketType? Type { get; set; }
     }
 }

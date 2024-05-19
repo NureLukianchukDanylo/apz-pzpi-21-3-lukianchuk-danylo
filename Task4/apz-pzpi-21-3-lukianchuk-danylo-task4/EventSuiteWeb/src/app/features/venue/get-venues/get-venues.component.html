@@ -1,0 +1,41 @@
+<div class="container">
+    <h1 class="mt-3">Venue List</h1>
+
+    <div class="d-flex justify-content-end mt-3">
+        <a [routerLink]="['/add-venue']" class="btn btn-primary">Add Venue</a>    
+    </div>
+
+    <ng-container *ngIf="venues$ | async as venues">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Floor</th>
+                        <th>Room Number</th>
+                        <th>Services</th>
+                        <th>Square</th>
+                        <th>Max Size</th>
+                        <th>Type</th>
+                        <th>Mall Id</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let venue of venues">
+                        <td>{{venue.id}}</td>
+                        <td>{{venue.floor}}</td>
+                        <td>{{venue.roomNumber}}</td>
+                        <td>{{venue.services}}</td>
+                        <td>{{venue.square}}</td>
+                        <td>{{venue.maxSize}}</td>
+                        <td>{{venue.type}}</td>
+                        <td>{{venue.mallId}}</td>
+                        <td>
+                            <a class="btn btn-warning" [routerLink]="['/edit-venue', venue.id]">Edit</a>
+                            <button type="button" class="btn btn-danger ms-3" (click)="onDelete(venue.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+</div>

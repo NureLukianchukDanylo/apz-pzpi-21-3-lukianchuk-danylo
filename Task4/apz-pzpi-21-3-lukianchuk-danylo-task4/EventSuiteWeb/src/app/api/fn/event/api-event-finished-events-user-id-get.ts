@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
+import { FinishedEvent } from '../../models/finished-event-model';
 
 
 export interface ApiEventFinishedEventsUserIdGet$Params {
@@ -13,7 +14,7 @@ export interface ApiEventFinishedEventsUserIdGet$Params {
   'PageInfo.Number'?: number;
 }
 
-export function apiEventFinishedEventsUserIdGet(http: HttpClient, rootUrl: string, params: ApiEventFinishedEventsUserIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+export function apiEventFinishedEventsUserIdGet(http: HttpClient, rootUrl: string, params: ApiEventFinishedEventsUserIdGet$Params, context?: HttpContext): Observable<FinishedEvent[]> {
   const rb = new RequestBuilder(rootUrl, apiEventFinishedEventsUserIdGet.PATH, 'get');
   if (params) {
     rb.path('userId', params.userId, {"style":"simple"});
@@ -22,11 +23,11 @@ export function apiEventFinishedEventsUserIdGet(http: HttpClient, rootUrl: strin
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: '*/*', context })
   ).pipe(
-    filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
-    map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+    filter((r: any): r is HttpResponse<FinishedEvent[]> => r instanceof HttpResponse),
+    map((r: HttpResponse<FinishedEvent[]>) => {
+      return r.body as FinishedEvent[];
     })
   );
 }

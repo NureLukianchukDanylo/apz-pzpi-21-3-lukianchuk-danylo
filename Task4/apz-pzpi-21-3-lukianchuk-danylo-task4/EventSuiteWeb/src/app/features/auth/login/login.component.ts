@@ -36,20 +36,6 @@ export class LoginComponent implements OnInit {
         },
         error: (err: HttpErrorResponse) => this.invalidLogin = true
       });
-      // this.http.post<AuthenticatedResponse>("http://localhost:5001/api/Auth/login", this.credentials, {
-      //   headers: new HttpHeaders({ "Content-Type": "application/json"})
-      // })
-      // .subscribe({
-      //   next: (response: AuthenticatedResponse) => {
-      //     const token = response.token;
-      //     console.log(response);
-      //     console.log(token);
-      //     localStorage.setItem("jwt", token); 
-      //     this.invalidLogin = false; 
-      //     this.router.navigate(["/home"]);
-      //   },
-      //   error: (err: HttpErrorResponse) => this.invalidLogin = true
-      // })
     }
   }
 }

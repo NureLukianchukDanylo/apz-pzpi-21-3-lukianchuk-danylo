@@ -1,0 +1,33 @@
+<div class="container">
+    <h1 class="mt-3">Mall List</h1>
+
+    <div class="d-flex justify-content-end mt-3">
+        <a [routerLink]="['/add-mall']" class="btn btn-primary">Add Mall</a>    
+    </div>
+
+    <ng-container *ngIf="malls$ | async as malls">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Square</th>
+                        <th>Location Id</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let mall of malls">
+                        <td>{{mall.id}}</td>
+                        <td>{{mall.name}}</td>
+                        <td>{{mall.square}}</td>
+                        <td>{{mall.locationId}}</td>
+                        <td>
+                            <a class="btn btn-warning" [routerLink]="['/edit-mall', mall.id]">Edit</a>
+                            <button type="button" class="btn btn-danger ms-3" (click)="onDelete(mall.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+</div>

@@ -14,8 +14,7 @@ namespace EventSuite.Core.Mappings
     {
         public SmartBraceletMappingProfile()
         {
-            CreateMap<SmartBracelet, SmartBraceletResponse>()
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString())).ReverseMap();
+            CreateMap<SmartBracelet, SmartBraceletResponse>().ReverseMap();
             CreateMap<SmartBraceletRequest, SmartBracelet>().ReverseMap();
         }
     }

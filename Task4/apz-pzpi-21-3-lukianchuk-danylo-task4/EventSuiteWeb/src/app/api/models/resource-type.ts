@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export enum ResourceType {
-  $0 = 0,
-  $1 = 1
+  Equipment = 0,
+  Personnel = 1
 }

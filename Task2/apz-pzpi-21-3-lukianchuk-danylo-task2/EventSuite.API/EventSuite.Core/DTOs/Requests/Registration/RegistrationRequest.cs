@@ -9,5 +9,7 @@ namespace EventSuite.Core.DTOs.Requests.Registration
     public class RegistrationRequest
     {
         public int? EventId { get; set; }
+
+        public string? UserId { get; set; }
     }
 }

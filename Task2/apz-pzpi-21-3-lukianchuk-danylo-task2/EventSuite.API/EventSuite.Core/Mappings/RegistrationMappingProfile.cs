@@ -19,7 +19,7 @@ namespace EventSuite.Core.Mappings
             CreateMap<Registration, RegistrationResponse>()
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.DateCreated))
                 .ForMember(dest => dest.TicketsAmount, opt => opt.MapFrom(src => src.Tickets.Count())).ReverseMap();
-            CreateMap<RegistrationRequest, Reservation>().ReverseMap();
+            CreateMap<RegistrationRequest, Registration>().ReverseMap();
         }
     }
 }

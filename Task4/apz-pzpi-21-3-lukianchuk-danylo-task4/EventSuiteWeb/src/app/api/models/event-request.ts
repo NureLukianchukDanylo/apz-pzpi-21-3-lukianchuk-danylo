@@ -2,10 +2,10 @@
 /* eslint-disable */
 export interface EventRequest {
   description?: string | null;
-  endDate?: string | null;
+  endDate?: Date;
   name?: string | null;
   paidEntrance?: boolean;
   size?: number;
-  startDate?: string | null;
+  startDate?: Date;
   userId?: string | null;
 }

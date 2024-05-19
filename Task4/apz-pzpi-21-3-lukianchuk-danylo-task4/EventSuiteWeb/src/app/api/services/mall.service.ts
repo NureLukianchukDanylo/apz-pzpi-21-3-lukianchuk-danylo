@@ -21,6 +21,7 @@ import { apiMallMallsGet } from '../fn/mall/api-mall-malls-get';
 import { ApiMallMallsGet$Params } from '../fn/mall/api-mall-malls-get';
 import { apiMallMallsLocationIdGet } from '../fn/mall/api-mall-malls-location-id-get';
 import { ApiMallMallsLocationIdGet$Params } from '../fn/mall/api-mall-malls-location-id-get';
+import { Mall } from '../models/mall-model';
 
 @Injectable({ providedIn: 'root' })
 export class MallService extends BaseService {
@@ -37,7 +38,7 @@ export class MallService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiMallMallsGet$Response(params?: ApiMallMallsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  apiMallMallsGet$Response(params?: ApiMallMallsGet$Params, context?: HttpContext): Observable<Mall[]> {
     return apiMallMallsGet(this.http, this.rootUrl, params, context);
   }
 
@@ -47,9 +48,9 @@ export class MallService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiMallMallsGet(params?: ApiMallMallsGet$Params, context?: HttpContext): Observable<void> {
+  apiMallMallsGet(params?: ApiMallMallsGet$Params, context?: HttpContext): Observable<Mall[]> {
     return this.apiMallMallsGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: Mall[]): Mall[] => r)
     );
   }
 

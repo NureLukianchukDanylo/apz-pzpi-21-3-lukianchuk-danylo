@@ -23,6 +23,8 @@ import { apiEventEventsUserIdGet } from '../fn/event/api-event-events-user-id-ge
 import { ApiEventEventsUserIdGet$Params } from '../fn/event/api-event-events-user-id-get';
 import { apiEventFinishedEventsUserIdGet } from '../fn/event/api-event-finished-events-user-id-get';
 import { ApiEventFinishedEventsUserIdGet$Params } from '../fn/event/api-event-finished-events-user-id-get';
+import { Event } from 'src/app/api/models/event-model';
+import { FinishedEvent } from '../models/finished-event-model';
 
 @Injectable({ providedIn: 'root' })
 export class EventService extends BaseService {
@@ -39,7 +41,7 @@ export class EventService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiEventEventsGet$Response(params?: ApiEventEventsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  apiEventEventsGet$Response(params?: ApiEventEventsGet$Params, context?: HttpContext): Observable<Event[]> {
     return apiEventEventsGet(this.http, this.rootUrl, params, context);
   }
 
@@ -49,9 +51,9 @@ export class EventService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiEventEventsGet(params?: ApiEventEventsGet$Params, context?: HttpContext): Observable<void> {
+  apiEventEventsGet(params?: ApiEventEventsGet$Params, context?: HttpContext): Observable<Event[]> {
     return this.apiEventEventsGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: Event[]): Event[] => r)
     );
   }
 
@@ -64,7 +66,7 @@ export class EventService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiEventFinishedEventsUserIdGet$Response(params: ApiEventFinishedEventsUserIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  apiEventFinishedEventsUserIdGet$Response(params: ApiEventFinishedEventsUserIdGet$Params, context?: HttpContext): Observable<FinishedEvent[]> {
     return apiEventFinishedEventsUserIdGet(this.http, this.rootUrl, params, context);
   }
 
@@ -74,9 +76,9 @@ export class EventService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiEventFinishedEventsUserIdGet(params: ApiEventFinishedEventsUserIdGet$Params, context?: HttpContext): Observable<void> {
+  apiEventFinishedEventsUserIdGet(params: ApiEventFinishedEventsUserIdGet$Params, context?: HttpContext): Observable<FinishedEvent[]> {
     return this.apiEventFinishedEventsUserIdGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: FinishedEvent[]): FinishedEvent[] => r)
     );
   }
 
@@ -89,7 +91,7 @@ export class EventService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiEventEventIdGet$Response(params: ApiEventEventIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  apiEventEventIdGet$Response(params: ApiEventEventIdGet$Params, context?: HttpContext): Observable<Event> {
     return apiEventEventIdGet(this.http, this.rootUrl, params, context);
   }
 
@@ -99,9 +101,9 @@ export class EventService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiEventEventIdGet(params: ApiEventEventIdGet$Params, context?: HttpContext): Observable<void> {
+  apiEventEventIdGet(params: ApiEventEventIdGet$Params, context?: HttpContext): Observable<Event> {
     return this.apiEventEventIdGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: Event): Event => r)
     );
   }
 
