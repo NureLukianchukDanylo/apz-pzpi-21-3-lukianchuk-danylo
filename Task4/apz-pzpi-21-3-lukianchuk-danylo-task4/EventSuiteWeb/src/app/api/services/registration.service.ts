@@ -23,6 +23,7 @@ import { apiRegistrationRegistrationsGet } from '../fn/registration/api-registra
 import { ApiRegistrationRegistrationsGet$Params } from '../fn/registration/api-registration-registrations-get';
 import { apiRegistrationUserRegistrationsUserIdGet } from '../fn/registration/api-registration-user-registrations-user-id-get';
 import { ApiRegistrationUserRegistrationsUserIdGet$Params } from '../fn/registration/api-registration-user-registrations-user-id-get';
+import { Registration } from '../models/registration-model';
 
 @Injectable({ providedIn: 'root' })
 export class RegistrationService extends BaseService {
@@ -39,7 +40,7 @@ export class RegistrationService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiRegistrationRegistrationsGet$Response(params?: ApiRegistrationRegistrationsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  apiRegistrationRegistrationsGet$Response(params?: ApiRegistrationRegistrationsGet$Params, context?: HttpContext): Observable<Registration[]> {
     return apiRegistrationRegistrationsGet(this.http, this.rootUrl, params, context);
   }
 
@@ -49,9 +50,9 @@ export class RegistrationService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiRegistrationRegistrationsGet(params?: ApiRegistrationRegistrationsGet$Params, context?: HttpContext): Observable<void> {
+  apiRegistrationRegistrationsGet(params?: ApiRegistrationRegistrationsGet$Params, context?: HttpContext): Observable<Registration[]> {
     return this.apiRegistrationRegistrationsGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: Registration[]): Registration[] => r)
     );
   }
 

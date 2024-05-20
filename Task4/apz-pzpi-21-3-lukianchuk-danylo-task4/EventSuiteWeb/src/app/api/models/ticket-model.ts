@@ -1,6 +1,6 @@
-
 import { TicketType } from "./ticket-type";
-export interface TicketRequest {
+export interface Ticket {
+  id: number;
   price?: number;
   registrationId?: number;
   smartBraceletId?: number;

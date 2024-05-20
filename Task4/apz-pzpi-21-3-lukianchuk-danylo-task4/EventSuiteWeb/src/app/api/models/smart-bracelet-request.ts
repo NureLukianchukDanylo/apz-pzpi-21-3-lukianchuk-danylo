@@ -8,8 +8,8 @@ export interface SmartBraceletRequest {
   accessLongitude2?: number | null;
   currentLatitude?: number | null;
   currentLongitude?: number | null;
-  endUsageDate?: string | null;
+  endUsageDate?: Date;
   serialNumber?: string | null;
-  startUsageDate?: string | null;
+  startUsageDate?: Date;
   status?: SmartBraceletStatus;
 }

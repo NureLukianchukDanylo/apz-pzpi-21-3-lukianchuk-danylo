@@ -23,6 +23,7 @@ import { apiSmartBraceletSmartBraceletPost } from '../fn/smart-bracelet/api-smar
 import { ApiSmartBraceletSmartBraceletPost$Params } from '../fn/smart-bracelet/api-smart-bracelet-smart-bracelet-post';
 import { apiSmartBraceletSmartBraceletsGet } from '../fn/smart-bracelet/api-smart-bracelet-smart-bracelets-get';
 import { ApiSmartBraceletSmartBraceletsGet$Params } from '../fn/smart-bracelet/api-smart-bracelet-smart-bracelets-get';
+import { SmartBracelet } from '../models/smart-bracelet-model';
 
 @Injectable({ providedIn: 'root' })
 export class SmartBraceletService extends BaseService {
@@ -39,7 +40,7 @@ export class SmartBraceletService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiSmartBraceletSmartBraceletsGet$Response(params?: ApiSmartBraceletSmartBraceletsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  apiSmartBraceletSmartBraceletsGet$Response(params?: ApiSmartBraceletSmartBraceletsGet$Params, context?: HttpContext): Observable<SmartBracelet[]> {
     return apiSmartBraceletSmartBraceletsGet(this.http, this.rootUrl, params, context);
   }
 
@@ -49,9 +50,9 @@ export class SmartBraceletService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiSmartBraceletSmartBraceletsGet(params?: ApiSmartBraceletSmartBraceletsGet$Params, context?: HttpContext): Observable<void> {
+  apiSmartBraceletSmartBraceletsGet(params?: ApiSmartBraceletSmartBraceletsGet$Params, context?: HttpContext): Observable<SmartBracelet[]> {
     return this.apiSmartBraceletSmartBraceletsGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: SmartBracelet[]): SmartBracelet[] => r)
     );
   }
 

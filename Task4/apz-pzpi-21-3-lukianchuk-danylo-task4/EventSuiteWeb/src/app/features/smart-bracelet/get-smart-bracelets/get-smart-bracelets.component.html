@@ -1,0 +1,47 @@
+<div class="container">
+    <h1 class="mt-3">Smart Bracelet List</h1>
+
+    <div class="d-flex justify-content-end mt-3">
+        <a [routerLink]="['/add-smart-bracelet']" class="btn btn-primary">Add Smart Bracelet</a>    
+    </div>
+
+    <ng-container *ngIf="smartBracelets$ | async as smartBracelets">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Serial Number</th>
+                        <th>Start Usage Date</th>
+                        <th>End Usage Date</th>
+                        <th>Status</th>
+                        <th>Access Latitude 1</th>
+                        <th>Access Longitude 1</th>
+                        <th>Access Latitude 2</th>
+                        <th>Access Longitude 2</th>
+                        <th>Current Latitude</th>
+                        <th>Current Longitude</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let smartBracelet of smartBracelets">
+                        <td>{{smartBracelet.id}}</td>
+                        <td>{{smartBracelet.serialNumber}}</td>
+                        <td>{{smartBracelet.startUsageDate| date:'short'}}</td>
+                        <td>{{smartBracelet.endUsageDate| date:'short'}}</td>
+                        <td>{{smartBracelet.status}}</td>
+                        <td>{{smartBracelet.accessLatitude1 | number:'1.4-4'}}</td>
+                        <td>{{smartBracelet.accessLongitude1 | number:'1.4-4'}}</td>
+                        <td>{{smartBracelet.accessLatitude2 | number:'1.4-4'}}</td>
+                        <td>{{smartBracelet.accessLongitude2 | number:'1.4-4'}}</td>
+                        <td>{{smartBracelet.currentLatitude | number:'1.4-4'}}</td>
+                        <td>{{smartBracelet.currentLongitude | number:'1.4-4'}}</td>
+                        <td>
+                            <a class="btn btn-warning" [routerLink]="['/edit-smart-bracelet', smartBracelet.id]">Edit</a>
+                            <button type="button" class="btn btn-danger ms-3" (click)="onDelete(smartBracelet.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+</div>

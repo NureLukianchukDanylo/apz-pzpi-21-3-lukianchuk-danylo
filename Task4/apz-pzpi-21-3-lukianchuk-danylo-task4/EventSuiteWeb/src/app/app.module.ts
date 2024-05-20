@@ -32,6 +32,12 @@ import { GetFinishedEventsComponent } from './features/event/get-finished-events
 import { AddRegistrationComponent } from './features/registration/add-registration/add-registration.component';
 import { EditRegistrationComponent } from './features/registration/edit-registration/edit-registration.component';
 import { GetRegistrationsComponent } from './features/registration/get-registrations/get-registrations.component';
+import { AddTicketComponent } from './features/ticket/add-ticket/add-ticket.component';
+import { EditTicketComponent } from './features/ticket/edit-ticket/edit-ticket.component';
+import { GetTicketsComponent } from './features/ticket/get-tickets/get-tickets.component';
+import { GetSmartBraceletsComponent } from './features/smart-bracelet/get-smart-bracelets/get-smart-bracelets.component';
+import { AddSmartBraceletComponent } from './features/smart-bracelet/add-smart-bracelet/add-smart-bracelet.component';
+import { EditSmartBraceletComponent } from './features/smart-bracelet/edit-smart-bracelet/edit-smart-bracelet.component';
 
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
@@ -66,7 +72,13 @@ export function tokenGetter() {
     GetFinishedEventsComponent,
     AddRegistrationComponent,
     EditRegistrationComponent,
-    GetRegistrationsComponent
+    GetRegistrationsComponent,
+    AddTicketComponent,
+    EditTicketComponent,
+    GetTicketsComponent,
+    GetSmartBraceletsComponent,
+    AddSmartBraceletComponent,
+    EditSmartBraceletComponent
   ],
   imports: [
     BrowserModule,

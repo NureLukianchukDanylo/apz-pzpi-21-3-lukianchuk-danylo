@@ -1,0 +1,35 @@
+<div class="container">
+    <h1 class="mt-3">Ticket List</h1>
+
+    <div class="d-flex justify-content-end mt-3">
+        <a [routerLink]="['/add-ticket']" class="btn btn-primary">Add Ticket</a>    
+    </div>
+
+    <ng-container *ngIf="tickets$ | async as tickets">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Price</th>
+                        <th>Type</th>
+                        <th>Registration Id</th>
+                        <th>Smart Bracelet Id</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let ticket of tickets">
+                        <td>{{ticket.id}}</td>
+                        <td>{{ticket.price}}</td>
+                        <td>{{ticket.type}}</td>
+                        <td>{{ticket.registrationId}}</td>
+                        <td>{{ticket.smartBraceletId}}</td>
+                        <td>
+                            <a class="btn btn-warning" [routerLink]="['/edit-ticket', ticket.id]">Edit</a>
+                            <button type="button" class="btn btn-danger ms-3" (click)="onDelete(ticket.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+</div>

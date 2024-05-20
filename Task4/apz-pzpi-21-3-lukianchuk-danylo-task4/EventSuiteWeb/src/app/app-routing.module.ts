@@ -26,6 +26,12 @@ import { GetResourcesComponent } from './features/resource/get-resources/get-res
 import { AddRegistrationComponent } from './features/registration/add-registration/add-registration.component';
 import { EditRegistrationComponent } from './features/registration/edit-registration/edit-registration.component';
 import { GetRegistrationsComponent } from './features/registration/get-registrations/get-registrations.component';
+import { AddTicketComponent } from './features/ticket/add-ticket/add-ticket.component';
+import { EditTicketComponent } from './features/ticket/edit-ticket/edit-ticket.component';
+import { GetTicketsComponent } from './features/ticket/get-tickets/get-tickets.component';
+import { AddSmartBraceletComponent } from './features/smart-bracelet/add-smart-bracelet/add-smart-bracelet.component';
+import { EditSmartBraceletComponent } from './features/smart-bracelet/edit-smart-bracelet/edit-smart-bracelet.component';
+import { GetSmartBraceletsComponent } from './features/smart-bracelet/get-smart-bracelets/get-smart-bracelets.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -51,6 +57,12 @@ const routes: Routes = [
   { path: 'registrations', component: GetRegistrationsComponent, canActivate: [AuthGuardService] },
   { path: 'add-registration', component: AddRegistrationComponent, canActivate: [AuthGuardService]},
   { path: 'edit-registration/:id', component: EditRegistrationComponent, canActivate: [AuthGuardService]},
+  { path: 'tickets', component: GetTicketsComponent, canActivate: [AuthGuardService] },
+  { path: 'add-ticket', component: AddTicketComponent, canActivate: [AuthGuardService]},
+  { path: 'edit-ticket/:id', component: EditTicketComponent, canActivate: [AuthGuardService]},
+  { path: 'smart-bracelets', component: GetSmartBraceletsComponent, canActivate: [AuthGuardService] },
+  { path: 'add-smart-bracelet', component: AddSmartBraceletComponent, canActivate: [AuthGuardService]},
+  { path: 'edit-smart-bracelet/:id', component: EditSmartBraceletComponent, canActivate: [AuthGuardService]},
   { path: 'users', 
   canActivate: [AuthGuardService],
   children: [
