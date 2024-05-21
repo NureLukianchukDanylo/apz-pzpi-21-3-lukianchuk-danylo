@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { TranslateLoader, TranslateModule } from  '@ngx-translate/core';
+import { TranslateHttpLoader } from  '@ngx-translate/http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,6 +40,12 @@ import { GetTicketsComponent } from './features/ticket/get-tickets/get-tickets.c
 import { GetSmartBraceletsComponent } from './features/smart-bracelet/get-smart-bracelets/get-smart-bracelets.component';
 import { AddSmartBraceletComponent } from './features/smart-bracelet/add-smart-bracelet/add-smart-bracelet.component';
 import { EditSmartBraceletComponent } from './features/smart-bracelet/edit-smart-bracelet/edit-smart-bracelet.component';
+import { AddReservationComponent } from './features/reservation/add-reservation/add-reservation.component';
+import { EditReservationComponent } from './features/reservation/edit-reservation/edit-reservation.component';
+import { GetReservationsComponent } from './features/reservation/get-reservations/get-reservations.component';
+import { AddEventResourceComponent } from './features/event-resource/add-event-resource/add-event-resource.component';
+import { EditEventResourceComponent } from './features/event-resource/edit-event-resource/edit-event-resource.component';
+import { GetEventResourcesComponent } from './features/event-resource/get-event-resources/get-event-resources.component';
 
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
@@ -78,7 +86,13 @@ export function tokenGetter() {
     GetTicketsComponent,
     GetSmartBraceletsComponent,
     AddSmartBraceletComponent,
-    EditSmartBraceletComponent
+    EditSmartBraceletComponent,
+    AddReservationComponent,
+    EditReservationComponent,
+    GetReservationsComponent,
+    AddEventResourceComponent,
+    EditEventResourceComponent,
+    GetEventResourcesComponent
   ],
   imports: [
     BrowserModule,

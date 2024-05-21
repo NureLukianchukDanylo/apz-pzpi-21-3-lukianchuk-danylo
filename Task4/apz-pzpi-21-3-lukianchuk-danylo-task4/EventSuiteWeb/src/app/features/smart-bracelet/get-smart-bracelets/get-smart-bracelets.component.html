@@ -39,6 +39,7 @@
                         <td>
                             <a class="btn btn-warning" [routerLink]="['/edit-smart-bracelet', smartBracelet.id]">Edit</a>
                             <button type="button" class="btn btn-danger ms-3" (click)="onDelete(smartBracelet.id)">Delete</button>
+                            <button type="button" class="btn bg-warning-subtle ms-3" (click)="updateCoordinates(smartBracelet.id)">Update Coordinates</button>
                         </td>
                     </tr>
                 </tbody>

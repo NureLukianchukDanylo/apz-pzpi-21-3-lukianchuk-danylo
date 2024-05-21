@@ -6,7 +6,7 @@
             <div class="mt-3">
                 <label for="event" class="form-label">Event</label>
                 <ng-container *ngIf="events$ | async as events">
-                    <select id="user" name="user" class="form-select" [(ngModel)]="model.eventId">
+                    <select id="event" name="event" class="form-select" [(ngModel)]="model.eventId">
                         <option *ngFor="let event of events" [value]="event.id">{{event.name}}</option>
                     </select>
                 </ng-container> 

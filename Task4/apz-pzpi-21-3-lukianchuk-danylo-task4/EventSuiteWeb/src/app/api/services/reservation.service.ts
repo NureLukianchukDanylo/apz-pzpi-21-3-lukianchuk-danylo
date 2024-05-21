@@ -21,6 +21,7 @@ import { apiReservationReservationsEventIdGet } from '../fn/reservation/api-rese
 import { ApiReservationReservationsEventIdGet$Params } from '../fn/reservation/api-reservation-reservations-event-id-get';
 import { apiReservationReservationsGet } from '../fn/reservation/api-reservation-reservations-get';
 import { ApiReservationReservationsGet$Params } from '../fn/reservation/api-reservation-reservations-get';
+import { Reservation } from '../models/reservation-model';
 
 @Injectable({ providedIn: 'root' })
 export class ReservationService extends BaseService {
@@ -37,7 +38,7 @@ export class ReservationService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiReservationReservationsGet$Response(params?: ApiReservationReservationsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  apiReservationReservationsGet$Response(params?: ApiReservationReservationsGet$Params, context?: HttpContext): Observable<Reservation[]> {
     return apiReservationReservationsGet(this.http, this.rootUrl, params, context);
   }
 
@@ -47,9 +48,9 @@ export class ReservationService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiReservationReservationsGet(params?: ApiReservationReservationsGet$Params, context?: HttpContext): Observable<void> {
+  apiReservationReservationsGet(params?: ApiReservationReservationsGet$Params, context?: HttpContext): Observable<Reservation[]> {
     return this.apiReservationReservationsGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: Reservation[]): Reservation[] => r)
     );
   }
 

@@ -108,7 +108,7 @@ namespace EventSuite.API.Controllers
                 _logger.Error($"Event resource with id: {id} not found");
                 return NotFound($"Event resource with id: {id} not found");
             }
-            var eventResourceResponse = _mapper.Map<EventResponse>(result);
+            var eventResourceResponse = _mapper.Map<EventResourceResponse>(result);
             return Ok(eventResourceResponse);
         }
     }

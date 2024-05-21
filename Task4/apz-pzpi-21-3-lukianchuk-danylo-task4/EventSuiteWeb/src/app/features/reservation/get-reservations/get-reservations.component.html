@@ -1,0 +1,31 @@
+<div class="container">
+    <h1 class="mt-3">Reservation List</h1>
+
+    <div class="d-flex justify-content-end mt-3">
+        <a [routerLink]="['/add-reservation']" class="btn btn-primary">Add Reservation</a>    
+    </div>
+
+    <ng-container *ngIf="reservations$ | async as reservations">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Event Id</th>
+                        <th>Venue Id</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let reservation of reservations">
+                        <td>{{reservation.id}}</td>
+                        <td>{{reservation.eventId}}</td>
+                        <td>{{reservation.venueId}}</td>
+                        <td>
+                            <a class="btn btn-warning" [routerLink]="['/edit-reservation', reservation.id]">Edit</a>
+                            <button type="button" class="btn btn-danger ms-3" (click)="onDelete(reservation.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+</div>

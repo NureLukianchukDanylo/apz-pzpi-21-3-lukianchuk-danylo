@@ -115,7 +115,7 @@ namespace EventSuite.API.Controllers
                 _logger.Error($"Smart bracelet with id: {id} not found");
                 return NotFound($"Smart bracelet with id: {id} not found");
             }
-            return Ok("Coordinates were updated succesfully");
+            return Json("Coordinates were updated succesfully");
         }
 
         [HttpGet]

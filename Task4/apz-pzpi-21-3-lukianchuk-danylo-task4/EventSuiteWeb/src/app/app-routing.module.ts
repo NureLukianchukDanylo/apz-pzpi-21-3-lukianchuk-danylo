@@ -32,6 +32,12 @@ import { GetTicketsComponent } from './features/ticket/get-tickets/get-tickets.c
 import { AddSmartBraceletComponent } from './features/smart-bracelet/add-smart-bracelet/add-smart-bracelet.component';
 import { EditSmartBraceletComponent } from './features/smart-bracelet/edit-smart-bracelet/edit-smart-bracelet.component';
 import { GetSmartBraceletsComponent } from './features/smart-bracelet/get-smart-bracelets/get-smart-bracelets.component';
+import { AddReservationComponent } from './features/reservation/add-reservation/add-reservation.component';
+import { EditReservationComponent } from './features/reservation/edit-reservation/edit-reservation.component';
+import { GetReservationsComponent } from './features/reservation/get-reservations/get-reservations.component';
+import { AddEventResourceComponent } from './features/event-resource/add-event-resource/add-event-resource.component';
+import { EditEventResourceComponent } from './features/event-resource/edit-event-resource/edit-event-resource.component';
+import { GetEventResourcesComponent } from './features/event-resource/get-event-resources/get-event-resources.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -63,6 +69,12 @@ const routes: Routes = [
   { path: 'smart-bracelets', component: GetSmartBraceletsComponent, canActivate: [AuthGuardService] },
   { path: 'add-smart-bracelet', component: AddSmartBraceletComponent, canActivate: [AuthGuardService]},
   { path: 'edit-smart-bracelet/:id', component: EditSmartBraceletComponent, canActivate: [AuthGuardService]},
+  { path: 'reservations', component: GetReservationsComponent, canActivate: [AuthGuardService] },
+  { path: 'add-reservation', component: AddReservationComponent, canActivate: [AuthGuardService]},
+  { path: 'edit-reservation/:id', component: EditReservationComponent, canActivate: [AuthGuardService]},
+  { path: 'event-resources', component: GetEventResourcesComponent, canActivate: [AuthGuardService] },
+  { path: 'add-event-resource', component: AddEventResourceComponent, canActivate: [AuthGuardService]},
+  { path: 'edit-event-resource/:id', component: EditEventResourceComponent, canActivate: [AuthGuardService]},
   { path: 'users', 
   canActivate: [AuthGuardService],
   children: [

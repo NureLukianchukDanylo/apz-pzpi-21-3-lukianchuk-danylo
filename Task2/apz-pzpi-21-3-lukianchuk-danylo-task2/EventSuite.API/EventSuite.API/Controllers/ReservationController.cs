@@ -106,7 +106,7 @@ namespace EventSuite.API.Controllers
                 _logger.Error($"Reservation with id: {id} not found");
                 return NotFound($"Reservation with id: {id} not found");
             }
-            var reservationResponse = _mapper.Map<EventResponse>(result);
+            var reservationResponse = _mapper.Map<ReservationResponse>(result);
             return Ok(reservationResponse);
         }
     }

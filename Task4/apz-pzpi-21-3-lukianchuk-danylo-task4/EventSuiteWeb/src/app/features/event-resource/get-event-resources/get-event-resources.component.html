@@ -1,0 +1,33 @@
+<div class="container">
+    <h1 class="mt-3">Event Resource List</h1>
+
+    <div class="d-flex justify-content-end mt-3">
+        <a [routerLink]="['/add-event-resource']" class="btn btn-primary">Add Reservation</a>    
+    </div>
+
+    <ng-container *ngIf="eventResources$ | async as eventResources">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Amount</th>
+                        <th>Event Id</th>
+                        <th>Resource Id</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let eventResource of eventResources">
+                        <td>{{eventResource.id}}</td>
+                        <td>{{eventResource.amount}}</td>
+                        <td>{{eventResource.eventId}}</td>
+                        <td>{{eventResource.resourceId}}</td>
+                        <td>
+                            <a class="btn btn-warning" [routerLink]="['/edit-event-resource', eventResource.id]">Edit</a>
+                            <button type="button" class="btn btn-danger ms-3" (click)="onDelete(eventResource.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+</div>

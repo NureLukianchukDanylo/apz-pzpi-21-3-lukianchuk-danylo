@@ -13,6 +13,7 @@ import { SmartBraceletService } from 'src/app/api/services';
 export class GetSmartBraceletsComponent implements OnInit {
   smartBracelets$?: Observable<SmartBracelet[]>;
   deleteSmartBraceletSubscription?: Subscription;
+  errorMessage: string = '';
 
   constructor(private http: HttpClient, private smartBraceletService: SmartBraceletService) { }
 
@@ -20,7 +21,6 @@ export class GetSmartBraceletsComponent implements OnInit {
     this.smartBracelets$ = this.smartBraceletService.apiSmartBraceletSmartBraceletsGet({'PageInfo.Size': 10, 'PageInfo.Number': 1})
     .pipe(
       map((response: any) => {
-        console.log(response);
         return response.map((smartBracelet: any) => {
           const mallId = smartBracelet.mall?.id;
           return {
@@ -52,6 +52,20 @@ export class GetSmartBraceletsComponent implements OnInit {
       next: (response) => {
         this.ngOnInit();
       }
+    });
+  }
+
+  updateCoordinates(id: number): void {
+    this.smartBraceletService.apiSmartBraceletSmartBraceletIdCoordinatesPut({id: id})
+    .subscribe({
+      next: (response) => {
+        this.ngOnInit();
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err.error);
+        alert(err.error.Message);
+        this.ngOnInit();
+      } 
     });
   }
 }

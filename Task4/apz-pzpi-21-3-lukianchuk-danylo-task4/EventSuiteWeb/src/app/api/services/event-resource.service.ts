@@ -21,6 +21,7 @@ import { apiEventResourceEventResourcesEventIdGet } from '../fn/event-resource/a
 import { ApiEventResourceEventResourcesEventIdGet$Params } from '../fn/event-resource/api-event-resource-event-resources-event-id-get';
 import { apiEventResourceEventResourcesGet } from '../fn/event-resource/api-event-resource-event-resources-get';
 import { ApiEventResourceEventResourcesGet$Params } from '../fn/event-resource/api-event-resource-event-resources-get';
+import { EventResource } from '../models/event-resource-model';
 
 @Injectable({ providedIn: 'root' })
 export class EventResourceService extends BaseService {
@@ -37,7 +38,7 @@ export class EventResourceService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiEventResourceEventResourcesGet$Response(params?: ApiEventResourceEventResourcesGet$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  apiEventResourceEventResourcesGet$Response(params?: ApiEventResourceEventResourcesGet$Params, context?: HttpContext): Observable<EventResource[]> {
     return apiEventResourceEventResourcesGet(this.http, this.rootUrl, params, context);
   }
 
@@ -47,9 +48,9 @@ export class EventResourceService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  apiEventResourceEventResourcesGet(params?: ApiEventResourceEventResourcesGet$Params, context?: HttpContext): Observable<void> {
+  apiEventResourceEventResourcesGet(params?: ApiEventResourceEventResourcesGet$Params, context?: HttpContext): Observable<EventResource[]> {
     return this.apiEventResourceEventResourcesGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: EventResource[]): EventResource[] => r)
     );
   }
 
