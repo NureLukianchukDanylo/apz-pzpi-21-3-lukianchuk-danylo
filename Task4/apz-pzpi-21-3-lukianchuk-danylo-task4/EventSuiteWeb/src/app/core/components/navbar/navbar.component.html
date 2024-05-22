@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container">
+    <div class="container-fluid">
       <a class="navbar-brand" href="/home">Event Suite</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -7,48 +7,57 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" [routerLink]="['/events']" i18n>Events</a>
+            <a class="nav-link active" [routerLink]="['/events']">{{'events' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" [routerLink]="['/venues']" i18n>Venues</a>
+            <a class="nav-link active" [routerLink]="['/venues']">{{'venues' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" [routerLink]="['/resources']" i18n>Resources</a>
+            <a class="nav-link active" [routerLink]="['/resources']">{{'resources' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" [routerLink]="['/malls']" i18n>Malls</a>
+            <a class="nav-link active" [routerLink]="['/malls']">{{'malls' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" [routerLink]="['/registrations']" i18n>Registrations</a>
+            <a class="nav-link active" [routerLink]="['/registrations']">{{'registrations' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" [routerLink]="['/locations']" i18n>Locations</a>
+            <a class="nav-link active" [routerLink]="['/locations']">{{'locations' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" [routerLink]="['/smart-bracelets']" i18n>Smart Bracelets</a>
+            <a class="nav-link active" [routerLink]="['/smart-bracelets']">{{'smart-bracelets' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" [routerLink]="['/tickets']" i18n>Tickets</a>
+            <a class="nav-link active" [routerLink]="['/tickets']">{{'tickets' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" [routerLink]="['/reservations']" i18n>Reservations</a>
+            <a class="nav-link active" [routerLink]="['/reservations']">{{'reservations' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" [routerLink]="['/event-resources']" i18n>Event Resources</a>
+            <a class="nav-link active" [routerLink]="['/event-resources']">{{'event-resources' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" [routerLink]="['/users']" i18n>Users</a>
+            <a class="nav-link active" [routerLink]="['/users']">{{'users' | translate}}</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" i18n>
-              Database
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{'database' | translate}}
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" [routerLink]="['/backup']" i18n>Create backup</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/backup']">{{'backup' | translate}}</a></li>
             </ul>
           </li>
-          <li class="nav-item " *ngIf="isUserAuthenticated()">
-            <a class="nav-link active " href="home" (click)="logOut()" i18n>Log out</a>
+          <li class="nav-item" *ngIf="isUserAuthenticated()">
+            <a class="nav-link active " href="home" (click)="logOut()">{{'logOut' | translate}}</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{'language' | translate}}
+            </a>
+            <ul class="dropdown-menu flex justify-content-around">
+              <li><button class="dropdown-item btn btn-primary ms-2" type="button" (click)="onClick('en')">EN</button></li>
+              <li><button class="dropdown-item btn btn-primary ms-2" type="button" (click)="onClick('ua')">UA</button></li>
+            </ul>
           </li>
         </ul>
       </div>

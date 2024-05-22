@@ -1,34 +1,34 @@
-<h2 class="mt-5" style="text-align: center; " i18n>This is the Home Page</h2>
+<h2 class="mt-5" style="text-align: center;">{{'home' | translate}}</h2>
 <div style="display: flex; justify-content: center; align-items: center; height: 75vh;">
   <div>
     
     <div *ngIf="!isUserAuthenticated()">
-      <h1 style="text-align: center;" i18n>
-       Please, log in or create new account to get access 
+      <h1 style="text-align: center;">
+        {{'main-text' | translate}}
       </h1>
       <div class="d-flex justify-content-center mt-3">
         <div class="m-3">
-          <a [routerLink]="['/login']" class="btn btn-primary" i18n>Login</a>    
+          <a [routerLink]="['/login']" class="btn btn-primary">{{'logIn' | translate}}</a>    
         </div>
         <div class="m-3">
-          <a [routerLink]="['/register']" class="btn btn-primary" i18n>Register</a>    
+          <a [routerLink]="['/register']" class="btn btn-primary">{{'register' | translate}}</a>    
         </div>
       </div>
     </div>
     <div *ngIf="isUserAuthenticated()" style="color:blue;">
-      <h1 style="text-align: center;" i18n>
-        You are logged in. Welcome!
+      <h1 style="text-align: center;">
+        {{'loggedIn' | translate}}
       </h1>
       <div class="d-flex justify-content-center mt-3">
         <div class="m-3">
-          <a [routerLink]="['/events']" class="btn btn-primary" i18n>Manage Events</a>    
+          <a [routerLink]="['/events']" class="btn btn-primary" i18n>{{'manage-events' | translate}}</a>    
         </div>
         <div class="m-3">
-          <a [routerLink]="['/venues']" class="btn btn-primary" i18n>Manage Venues</a>    
+          <a [routerLink]="['/venues']" class="btn btn-primary" i18n>{{'manage-venues' | translate}}</a>    
         </div>
       </div>
       <div class="d-flex justify-content-center mt-3">
-        <a [routerLink]="['/resources']" class="btn btn-primary" i18n>Manage Resources</a>    
+        <a [routerLink]="['/resources']" class="btn btn-primary" i18n>{{'manage-resources' | translate}}</a>    
       </div>
     </div>
   </div>

@@ -1,16 +1,16 @@
 <div class="container">
     <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-      <h2 class="form-signin-heading">Login</h2>
-        <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password.</div>
+      <h2 class="form-signin-heading">{{'login' | translate}}</h2>
+        <div *ngIf="invalidLogin" class="alert alert-danger">{{'error' | translate}}</div>
         <br/>
-        <label for="username" class="sr-only">Email address</label>
+        <label for="username" class="sr-only">{{'email' | translate}}</label>
         <input type="email" id="username" name="username" [(ngModel)]="credentials.userName" 
           class="form-control" placeholder="User Name" required>
         <br/>
-        <label for="password" class="sr-only">Password</label>
+        <label for="password" class="sr-only">{{'password' | translate}}</label>
         <input type="password" id="password" name="password" [(ngModel)]="credentials.password" 
           class="form-control" placeholder="Password" required>
         <br/>
-        <button class="btn btn-lg btn-primary" type="submit" [disabled]="!loginForm.valid">Log in</button>
+        <button class="btn btn-lg btn-primary" type="submit" [disabled]="!loginForm.valid">{{'logIn' | translate}}</button>
     </form>
   </div>

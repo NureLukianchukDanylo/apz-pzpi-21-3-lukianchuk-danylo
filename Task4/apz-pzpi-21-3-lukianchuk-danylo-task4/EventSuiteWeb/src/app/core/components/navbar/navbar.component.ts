@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-navbar',
@@ -7,10 +8,11 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(private jwtHelper: JwtHelperService) { }
+  constructor(private jwtHelper: JwtHelperService, private translateService: TranslateService) { }
 
   ngOnInit(): void {
-
+    this.translateService.setDefaultLang("en");
+    this.translateService.use("en");
   }
 
   isUserAuthenticated = (): boolean => {
@@ -25,5 +27,9 @@ export class NavbarComponent {
   
   logOut = () => {
     localStorage.removeItem("jwt");
+  }
+
+  onClick(language: string) {
+    this.translateService.use(language);
   }
 }
