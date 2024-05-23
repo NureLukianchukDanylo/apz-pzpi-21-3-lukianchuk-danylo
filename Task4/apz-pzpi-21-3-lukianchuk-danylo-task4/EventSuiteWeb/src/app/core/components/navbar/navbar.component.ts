@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {TranslateService} from "@ngx-translate/core";
+import { AuthGuardService } from 'src/app/features/auth/services/auth-guard.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,8 +12,14 @@ export class NavbarComponent {
   constructor(private jwtHelper: JwtHelperService, private translateService: TranslateService) { }
 
   ngOnInit(): void {
-    this.translateService.setDefaultLang("en");
-    this.translateService.use("en");
+    var language = localStorage.getItem('language');
+    if (language == null) {
+      localStorage.setItem('language', 'en');
+      this.translateService.use('en');
+    }
+    else {
+      this.translateService.use(language);
+    }
   }
 
   isUserAuthenticated = (): boolean => {
@@ -30,6 +37,7 @@ export class NavbarComponent {
   }
 
   onClick(language: string) {
+    localStorage.setItem('language', language);
     this.translateService.use(language);
   }
 }
