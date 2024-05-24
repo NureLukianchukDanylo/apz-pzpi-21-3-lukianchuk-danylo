@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {TranslateService} from "@ngx-translate/core";
-import { AuthGuardService } from 'src/app/features/auth/services/auth-guard.service';
+import { AuthGuardService } from 'src/app/api/services/auth-guard.service';
 
 @Component({
   selector: 'app-navbar',

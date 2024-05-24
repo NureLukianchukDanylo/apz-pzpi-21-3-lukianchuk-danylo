@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginModel } from '../models/login-model';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { AuthenticatedResponse } from '../models/authenticated-response';
-import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/api/services/auth.service';
 import { LoginRequest } from 'src/app/api/models';

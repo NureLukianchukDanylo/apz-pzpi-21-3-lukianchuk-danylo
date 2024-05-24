@@ -4,7 +4,7 @@ import { HomeComponent } from './core/components/home/home.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { RegistrationComponent } from './features/auth/registration/registration.component';
 import { BackupComponent } from './features/database/backup/backup.component';
-import { AuthGuardService } from './features/auth/services/auth-guard.service';
+import { AuthGuardService } from './api/services/auth-guard.service';
 import { EditUserComponent } from './features/users/edit-user/edit-user.component';
 import { GetUsersComponent } from './features/users/get-users/get-users.component';
 import { AddLocationComponent } from './features/location/add-location/add-location.component';

@@ -3,7 +3,7 @@ import { FinishedEvent } from 'src/app/api/models/finished-event-model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, map, of, switchMap } from 'rxjs';
-import { AuthGuardService } from '../../auth/services/auth-guard.service';
+import { AuthGuardService } from '../../../api/services/auth-guard.service';
 import { User } from 'src/app/api/models/user-model';
 import { EventService } from 'src/app/api/services';
 import { UserService } from 'src/app/api/services/user.service';
